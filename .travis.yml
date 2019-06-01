@@ -1,0 +1,13 @@
+git:
+  depth: false
+  quiet: false
+
+branches:
+  only: 
+    - master
+
+language: java
+java:
+  - 1.8.0
+   
+  
