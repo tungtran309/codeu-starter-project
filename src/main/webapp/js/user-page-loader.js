@@ -30,17 +30,47 @@ function setPageTitle() {
 }
 
 /**
+ * Shows the about me form if the user is logged in and viewing their own page.
+ */
+function showAboutMeFormIfViewingSelf() {
+    fetch('/login-status')
+        .then((response) => {
+          return response.json();
+        })
+        .then((loginStatus) => {
+          if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
+            const aboutmeForm = document.getElementById('about-me-form');
+            aboutmeForm.classList.remove('hidden');
+          }
+        });
+}
+
+/** Fetches the about me part and add them to the page. */
+function fetchAboutMe(){
+    const url = '/about?user=' + parameterUsername;
+    fetch(url)
+        .then((response) => {
+          return response.text();
+        })
+        .then((aboutMe) => {
+          const aboutMeContainer = document.getElementById('about-me-container');
+          if(aboutMe == ''){
+            aboutMe = 'This user has not entered any information yet.';
+          }
+          aboutMeContainer.innerHTML = aboutMe;
+        });
+}
+
+/**
  * Shows the message form if the user is logged in and viewing their own page.
  */
 function showMessageFormIfViewingSelf() {
-  document.getElementById('about-me-form').classList.remove('hidden');
   fetch('/login-status')
       .then((response) => {
         return response.json();
       })
       .then((loginStatus) => {
-        if (loginStatus.isLoggedIn &&
-            loginStatus.username == parameterUsername) {
+        if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
           const messageForm = document.getElementById('message-form');
           messageForm.classList.remove('hidden');
         }
@@ -65,21 +95,6 @@ function fetchMessages() {
           const messageDiv = buildMessageDiv(message);
           messagesContainer.appendChild(messageDiv);
         });
-      });
-}
-
-function fetchAboutMe(){
-  const url = '/about?user=' + parameterUsername;
-  fetch(url).
-      then((response) => {
-        return response.text();
-      })
-      .then((aboutMe) => {
-        const aboutMeContainer = document.getElementById('about-me-container');
-        if(aboutMe == ''){
-          aboutMe = 'This user has not entered any information yet.';
-        }
-        aboutMeContainer.innerHTML = aboutMe;
       });
 }
 
@@ -109,7 +124,8 @@ function buildMessageDiv(message) {
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
+  showAboutMeFormIfViewingSelf();
+  fetchAboutMe();
   showMessageFormIfViewingSelf();
   fetchMessages();
-  fetchAboutMe();
 }
