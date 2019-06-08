@@ -24,8 +24,15 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
 
 /** Provides access to the data stored in Datastore. */
 public class Datastore {
@@ -68,7 +75,10 @@ public class Datastore {
   public void storeMessage(Message message) {
     Entity messageEntity = new Entity("Message", message.getId().toString());
     messageEntity.setProperty("user", message.getUser());
-    messageEntity.setProperty("text", message.getText());
+    Parser parser = Parser.builder().build();
+    Node document = parser.parse(message.getText());
+    HtmlRenderer renderer = HtmlRenderer.builder().build();
+    messageEntity.setProperty("text", renderer.render(document));
     messageEntity.setProperty("timestamp", message.getTimestamp());
 
     datastore.put(messageEntity);
