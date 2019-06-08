@@ -112,7 +112,6 @@ function buildMessageDiv(message) {
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
   bodyDiv.innerHTML = message.text;
-
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
   messageDiv.appendChild(headerDiv);
