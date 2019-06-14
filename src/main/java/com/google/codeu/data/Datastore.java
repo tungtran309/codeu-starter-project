@@ -75,11 +75,12 @@ public class Datastore {
   public void storeMessage(Message message) {
     Entity messageEntity = new Entity("Message", message.getId().toString());
     messageEntity.setProperty("user", message.getUser());
-    // styled text part 1 here
-    Parser parser = Parser.builder().build();
+    // styled text part 1 here. Temporary remove it
+    /*Parser parser = Parser.builder().build();
     Node document = parser.parse(message.getText());
     HtmlRenderer renderer = HtmlRenderer.builder().build();
-    messageEntity.setProperty("text", renderer.render(document));
+    messageEntity.setProperty("text", renderer.render(document));*/
+    messageEntity.setProperty("text", message.getText());
     messageEntity.setProperty("timestamp", message.getTimestamp());
 
     datastore.put(messageEntity);
