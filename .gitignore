@@ -3,6 +3,7 @@ target
 .classpath
 .project
 .idea
+node_modules
 *.iml
 .DS_Store
 *.log

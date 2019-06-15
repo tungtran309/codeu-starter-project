@@ -1,0 +1,23 @@
+{
+  "name": "codeu-starter-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^12.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tungtran309/codeu-starter-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tungtran309/codeu-starter-project/issues"
+  },
+  "homepage": "https://github.com/tungtran309/codeu-starter-project#readme"
+}
