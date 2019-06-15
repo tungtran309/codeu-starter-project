@@ -60,19 +60,19 @@ public class MessageServlet extends HttpServlet {
     }
 
     List<Message> messages = datastore.getMessages(user);
-    List<Message> messages1 = new ArrayList<>();
+    List<Message> messageWithImage = new ArrayList<>();
     messages.forEach(message -> {
       Message replacedMessage = new Message(message.getUser(),ImageReplacement(message.getText()));
-      messages1.add(replacedMessage);
+      messageWithImage.add(replacedMessage);
     });
     Gson gson = new Gson();
-    String json = gson.toJson(messages1);
+    String json = gson.toJson(messageWithImage);
 
     response.getWriter().println(json);
   }
 
   /**
-   * Return correct form off image for message
+   * Return correct form of image for message
    */
   private String ImageReplacement(String rawMessage) {
     String regex = "(https?://\\S+\\.(png|jpg))";
