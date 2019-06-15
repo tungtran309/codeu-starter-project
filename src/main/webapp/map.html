@@ -78,7 +78,7 @@
                 button.appendChild(document.createTextNode('Submit'));
 
                 button.onclick = () => {
-                    //postMarker(lat, lng, textBox.value);
+                    postMarker(lat, lng, textBox.value);
                     createMarkerForDisplay(lat, lng, textBox.value);
                     editMarker.setMap(null);
                 };
@@ -89,6 +89,18 @@
                 containerDiv.appendChild(button);
 
                 return containerDiv;
+            }
+            
+            function postMarker(lat, lng, content) {
+                const params = new URLSearchParams();
+                params.append('lat', lat);
+                params.append('lng', lng);
+                params.append('content', content);
+
+                fetch('/markers', {
+                    method: 'POST',
+                    body: params
+                });
             }
         </script>
         <style>
