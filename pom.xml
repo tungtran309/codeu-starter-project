@@ -65,6 +65,12 @@ limitations under the License.
       <artifactId>google-cloud-datastore</artifactId>
       <version>1.52.0</version>
     </dependency>
+      <dependency>
+          <groupId>org.jetbrains</groupId>
+          <artifactId>annotations</artifactId>
+          <version>RELEASE</version>
+          <scope>compile</scope>
+      </dependency>
 
   </dependencies>
 
