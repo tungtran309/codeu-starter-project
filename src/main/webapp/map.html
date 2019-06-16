@@ -13,10 +13,18 @@
                     zoom: 6
                 });
 
-                // when user clicks in the map, show a marker with text box
-                map.addListener('click', (event) => {
-                    createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
-                });
+                fetch('/login-status')
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((loginStatus) => {
+                        if (loginStatus.isLoggedIn) {
+                            // when user clicks in the map, show a marker with text box
+                            map.addListener('click', (event) => {
+                                createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
+                            });
+                        }
+                    });
 
                 fetchMarkers();
             }
@@ -63,7 +71,7 @@
                     content: buildInfoWindowInput(lat, lng)
                 });
 
-                // when the user closes the editable info window, remove the marker
+                // if the user closes the editable info window, remove the marker
                 google.maps.event.addListener(infoWindow, 'closeclick', () => {
                     editMarker.setMap(null);
                 });
@@ -90,7 +98,8 @@
 
                 return containerDiv;
             }
-            
+
+            // send a marker to the backend for saving
             function postMarker(lat, lng, content) {
                 const params = new URLSearchParams();
                 params.append('lat', lat);
