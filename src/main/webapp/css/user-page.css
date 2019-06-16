@@ -40,6 +40,13 @@
   margin: 5px;
 }
 
+/* Style the image of message. */
+.message-body img {
+    display: block;
+    margin: 25px;
+    max-width: 100%;
+}
+
 /* Use this to hide certain elements like forms if the
    user is not logged in or viewing their own page. */
 .hidden {

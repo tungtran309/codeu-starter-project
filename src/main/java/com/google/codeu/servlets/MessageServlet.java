@@ -22,6 +22,7 @@ import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -59,10 +60,26 @@ public class MessageServlet extends HttpServlet {
     }
 
     List<Message> messages = datastore.getMessages(user);
+    List<Message> messageWithImage = new ArrayList<>();
+    messages.forEach(message -> {
+      Message replacedMessage = new Message(message.getUser(),ImageReplacement(message.getText()));
+      messageWithImage.add(replacedMessage);
+    });
     Gson gson = new Gson();
-    String json = gson.toJson(messages);
+    String json = gson.toJson(messageWithImage);
 
     response.getWriter().println(json);
+  }
+
+  /**
+   * Return correct form of image for message
+   */
+  private String ImageReplacement(String rawMessage) {
+    String regex = "(https?://\\S+\\.(png|jpg))";
+    String replacement = "<img src=\"$1\" />";
+    String textWithImageReplaced = rawMessage.replaceAll(regex, replacement);
+
+    return textWithImageReplaced;
   }
 
   /** Stores a new {@link Message}. */
