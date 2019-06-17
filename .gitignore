@@ -7,3 +7,4 @@ node_modules
 *.iml
 .DS_Store
 *.log
+*.csv#
