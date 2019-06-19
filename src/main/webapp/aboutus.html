@@ -16,49 +16,66 @@ limitations under the License.
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>About Us</title>
-    <link rel="stylesheet" href="/css/main.css">
-  </head>
-  </head>
-    <nav>
-      <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-      </ul>
-    </nav>
-    <h1>About Our Team</h1>
-    <h2>Vu Thi Thien Anh</h2>
-    <ul>
-      <li>Summer Feelz: Hot, hot and hot</li>
-      <li>Aspirational Hobby: Traveling is always my dream. But not travel and stay in a luxury hotel with luxury services, i love discovering. Travel around the world, discover the most dangerous and untouchable places to know more and experience more.</li>
-      <li>Ask me About: Games :)</li>
-    </ul>
-    <h2>Tran Quynh Mai</h2>
-    <ul>
-      <li>Summer Feelz: extremely hot, sticky, introverted (I'm kind of an introvert in everyday's life, not just summer LOL (but summer makes it worse :D) ) </li>
-      <li>Aspirational Hobby: travel around the world (I don't need to fly into the space, the Earth is already enough) </li>
-      <li>Ask me About: K-pop stuffs related, mostly girlgroup </li>
-    </ul>
-    <h2>Tran Thanh Tung</h2>
-    <ul>
-      <li>Summer Feelz: the worst season, too hot without air conditioner</li>
-      <li>Aspirational Hobby: hang out with my friends </li>
-      <li>Ask me About: movies, especially chinese movies </li>
-    </ul>
-    <h2>Nguyen Diep Xuan Quang</h2>
-    <ul>
-      <li>Summer Feelz: The amount of heat is way too damn high :(</li>
-      <li>
-        Aspirational Hobby:
-        <ul>
-          <li>Play badminton (to be more healthy)</li>
-          <li>Learn to play a musical instrument (maybe piano?)</li>
-          <li>Try out every food and drink on the world (hope I don't gain even more weight after this :D)</li>
-        </ul>
-      </li>
-      <li>Ask me About: Games (Touhou Project, League of Legends)</li>
-    </ul>
-  </body>
+    <head>
+        <meta charset="UTF-8">
+        <title>About Us</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
+        <script src="/js/navigation-loader.js??v=AUTO_INCREMENT_VERSION"></script>
+    </head>
+    <body>
+        <nav>
+            <ul id="navigation">
+                <li><a href="/">Home</a></li>
+                <li><a href="/aboutus.html">About Our Team</a></li>
+                <script>addLoginOrLogoutLinkToNavigation();</script>
+            </ul>
+        </nav>
+        <div class="jumbotron">
+            <h1>About Our Team</h1>
+        </div>
+        <div class="container-fluid" style="padding-top: 0">
+            <h2>Vu Thi Thien Anh</h2>
+            <ul>
+                <li>Summer Feelz: Hot, hot and hot</li>
+                <li>Aspirational Hobby: Traveling is always my dream. But not travel and stay in a luxury hotel with luxury services, i love discovering. Travel around the world, discover the most dangerous and untouchable places to know more and experience more.</li>
+                <li>Ask me About: Games :)</li>
+            </ul>
+            <hr>
+            <h2>Tran Quynh Mai</h2>
+            <ul>
+                <li>Summer Feelz: extremely hot, sticky, introverted (I'm kind of an introvert in everyday's life, not just summer LOL (but summer makes it worse :D) ) </li>
+                <li>Aspirational Hobby: travel around the world (I don't need to fly into the space, the Earth is already enough) </li>
+                <li>Ask me About: K-pop stuffs related, mostly girlgroup </li>
+            </ul>
+            <div id="picInTheMiddle">
+                <img src="images/maimeme.jpg" alt="funny?">
+            </div>
+            <hr>
+            <h2>Tran Thanh Tung</h2>
+            <ul>
+                <li>Summer Feelz: the worst season, too hot without air conditioner</li>
+                <li>Aspirational Hobby: hang out with my friends </li>
+                <li>Ask me About: movies, especially chinese movies </li>
+            </ul>
+            <hr>
+            <h2>Nguyen Diep Xuan Quang</h2>
+            <ul>
+                <li>Summer Feelz: The amount of heat is way too damn high :(</li>
+                <li>
+                    Aspirational Hobby:
+                    <ul>
+                        <li>Play badminton (to be more healthy)</li>
+                        <li>Learn to play a musical instrument (maybe piano?)</li>
+                        <li>Try out every food and drink on the world (hope I don't gain even more weight after this :D)</li>
+                    </ul>
+                </li>
+                <li>Ask me About: Games (Touhou Project, League of Legends)</li>
+            </ul>
+        </div>
+
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+    </body>
 </html>
