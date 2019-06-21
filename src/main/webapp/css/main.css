@@ -14,18 +14,15 @@
  * limitations under the License.
  */
 
-body{
-    font-family: 'Roboto', sans-serif;
+.container-fluid{
+    padding: 30px;
+    padding-top: 0;
 }
 
 .jumbotron{
     background-color: white;
     padding: 2rem;
     color: black;
-}
-
-.container-fluid{
-    padding: 30px;
 }
 
 #picInTheMiddle{
@@ -38,15 +35,12 @@ body{
     border: thin solid black;
 }
 
-nav a{
-    color: white;
+body{
+    font-family: 'Roboto', sans-serif;
 }
 
-/* Remove bullet points from navigation bar. */
-nav ul {
-    list-style-type: none;
-    padding-left: 20px;
-    background-color: #6f42c1;
+nav a{
+    color: white;
 }
 
 /* Keep navigation menu on one line. */
@@ -56,4 +50,11 @@ nav li {
     padding-right: 10px;
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+/* Remove bullet points from navigation bar. */
+nav ul {
+    list-style-type: none;
+    padding-left: 20px;
+    background-color: #6f42c1;
 }
