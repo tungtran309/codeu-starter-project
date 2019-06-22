@@ -38,10 +38,10 @@ function showAboutMeFormIfViewingSelf() {
           return response.json();
         })
         .then((loginStatus) => {
-          if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
-            const aboutmeForm = document.getElementById('about-me-form');
-            aboutmeForm.classList.remove('hidden');
-          }
+            if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
+                const aboutmeForm = document.getElementById('about-me-form');
+                aboutmeForm.classList.remove('hidden');
+            }
         });
 }
 
@@ -50,14 +50,14 @@ function fetchAboutMe(){
     const url = '/about?user=' + parameterUsername;
     fetch(url)
         .then((response) => {
-          return response.text();
+            return response.text();
         })
         .then((aboutMe) => {
-          const aboutMeContainer = document.getElementById('about-me-container');
-          if(aboutMe == ''){
-            aboutMe = 'This user has not entered any information yet.';
-          }
-          aboutMeContainer.innerHTML = aboutMe;
+            const aboutMeContainer = document.getElementById('about-me-container');
+            if(aboutMe == ''){
+                aboutMe = 'This user has not entered any information yet.';
+            }
+            aboutMeContainer.innerHTML = aboutMe;
         });
 }
 
@@ -70,10 +70,10 @@ function showMessageFormIfViewingSelf() {
         return response.json();
       })
       .then((loginStatus) => {
-        if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
-          const messageForm = document.getElementById('message-form');
-          messageForm.classList.remove('hidden');
-        }
+          if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
+              const messageForm = document.getElementById('message-form');
+              messageForm.classList.remove('hidden');
+          }
       });
 }
 
@@ -85,16 +85,16 @@ function fetchMessages() {
         return response.json();
       })
       .then((messages) => {
-        const messagesContainer = document.getElementById('message-container');
-        if (messages.length == 0) {
-          messagesContainer.innerHTML = '<p>This user has no posts yet.</p>';
-        } else {
-          messagesContainer.innerHTML = '';
-        }
-        messages.forEach((message) => {
-          const messageDiv = buildMessageDiv(message);
-          messagesContainer.appendChild(messageDiv);
-        });
+          const messagesContainer = document.getElementById('message-container');
+          if (messages.length == 0) {
+              messagesContainer.innerHTML = '<p>This user has no posts yet.</p>';
+          } else {
+              messagesContainer.innerHTML = '';
+          }
+          messages.forEach((message) => {
+              const messageDiv = buildMessageDiv(message);
+              messagesContainer.appendChild(messageDiv);
+          });
       });
 }
 
@@ -104,27 +104,26 @@ function fetchMessages() {
  * @return {Element}
  */
 function buildMessageDiv(message) {
-  const headerDiv = document.createElement('div');
-  headerDiv.classList.add('message-header');
-  headerDiv.appendChild(document.createTextNode(
-      message.user + ' - ' + new Date(message.timestamp)));
+    const headerDiv = document.createElement('div');
+    headerDiv.classList.add('message-header');
+    headerDiv.appendChild(document.createTextNode(message.user + ' - ' + new Date(message.timestamp)));
 
-  const bodyDiv = document.createElement('div');
-  bodyDiv.classList.add('message-body');
-  bodyDiv.innerHTML = message.text;
-  const messageDiv = document.createElement('div');
-  messageDiv.classList.add('message-div');
-  messageDiv.appendChild(headerDiv);
-  messageDiv.appendChild(bodyDiv);
+    const bodyDiv = document.createElement('div');
+    bodyDiv.classList.add('message-body');
+    bodyDiv.innerHTML = message.text;
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message-div');
+    messageDiv.appendChild(headerDiv);
+    messageDiv.appendChild(bodyDiv);
 
-  return messageDiv;
+    return messageDiv;
 }
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
-  setPageTitle();
-  showAboutMeFormIfViewingSelf();
-  fetchAboutMe();
-  showMessageFormIfViewingSelf();
-  fetchMessages();
+    setPageTitle();
+    showAboutMeFormIfViewingSelf();
+    fetchAboutMe();
+    showMessageFormIfViewingSelf();
+    fetchMessages();
 }
