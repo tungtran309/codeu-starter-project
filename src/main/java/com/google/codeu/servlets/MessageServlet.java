@@ -118,7 +118,7 @@ public class MessageServlet extends HttpServlet {
 
     // User submitted form without selecting a file, so we can't get a URL. (devserver)
     if(blobKeys == null || blobKeys.isEmpty()) {
-      return "";
+      return null;
     }
 
     // Our form only contains a single file input, so get the first index.
@@ -128,10 +128,10 @@ public class MessageServlet extends HttpServlet {
     BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
     if (blobInfo.getSize() == 0) {
       blobstoreService.delete(blobKey);
-      return "";
+      return null;
     }
 
-    // We could check the validity of the file here, e.g. to make sure it's an image file
+    //TODO : Check the validity of the file here, e.g. to make sure it's an image file
     // https://stackoverflow.com/q/10779564/873165
 
     // Use ImagesService to get a URL that points to the uploaded file.
