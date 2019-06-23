@@ -31,15 +31,17 @@ function addLoginOrLogoutLinkToNavigation() {
       })
       .then((loginStatus) => {
         if (loginStatus.isLoggedIn) {
-          navigationElement.appendChild(createListItem(createLink(
-              '/user-page.html?user=' + loginStatus.username, 'Your Page')));
-          navigationElement.appendChild(createListItem(createLink('stats.html', 'Stats')));
-          navigationElement.appendChild(createListItem(createLink('community.html', 'Community')));
+          navigationElement.appendChild(createListItem(createLink('stats.html', 'Stats')), false);
+          navigationElement.appendChild(createListItem(createLink('community.html', 'Community')), false);
           navigationElement.appendChild(
-              createListItem(createLink('/logout', 'Logout')));
+              createListItem(createLink('/logout', 'Logout'), true));
+          navigationElement.appendChild(createListItem(createLink(
+              '/user-page.html?user=' + loginStatus.username, 'Your Page'), true));
+          navigationElement.appendChild(createListItem(createLink(
+              '/setting-page.html?user=' + loginStatus.username, 'Setting'), true));
         } else {
           navigationElement.appendChild(
-              createListItem(createLink('/login', 'Login')));
+              createListItem(createLink('/login', 'Login'), true));
         }
       });
 }
@@ -47,10 +49,13 @@ function addLoginOrLogoutLinkToNavigation() {
 /**
  * Creates an li element.
  * @param {Element} childElement
+ * @param {boolean} isRightAligned
  * @return {Element} li element
  */
-function createListItem(childElement) {
+function createListItem(childElement, isRightAligned) {
   const listItemElement = document.createElement('li');
+  if (isRightAligned)
+    listItemElement.classList.add('right');
   listItemElement.appendChild(childElement);
   return listItemElement;
 }
