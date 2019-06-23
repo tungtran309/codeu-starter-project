@@ -16,6 +16,10 @@
 
 package com.google.codeu.servlets;
 
+import com.google.appengine.api.blobstore.*;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
@@ -24,6 +28,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,45 +47,6 @@ public class MessageServlet extends HttpServlet {
     datastore = new Datastore();
   }
 
-  /**
-   * Responds with a JSON representation of {@link Message} data for a specific user. Responds with
-   * an empty array if the user is not provided.
-   */
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-    response.setContentType("application/json");
-
-    String user = request.getParameter("user");
-
-    if (user == null || user.equals("")) {
-      // Request is invalid, return empty array
-      response.getWriter().println("[]");
-      return;
-    }
-
-    List<Message> messages = datastore.getMessages(user);
-    List<Message> messageWithImage = new ArrayList<>();
-    messages.forEach(message -> {
-      Message replacedMessage = new Message(message.getUser(),ImageReplacement(message.getText()));
-      messageWithImage.add(replacedMessage);
-    });
-    Gson gson = new Gson();
-    String json = gson.toJson(messageWithImage);
-
-    response.getWriter().println(json);
-  }
-
-  /**
-   * Return correct form of image for message
-   */
-  private String ImageReplacement(String rawMessage) {
-    String regex = "(https?://\\S+\\.(png|jpg))";
-    String replacement = "<img src=\"$1\" />";
-    String textWithImageReplaced = rawMessage.replaceAll(regex, replacement);
-
-    return textWithImageReplaced;
-  }
 
   /** Stores a new {@link Message}. */
   @Override
@@ -95,9 +61,41 @@ public class MessageServlet extends HttpServlet {
     String user = userService.getCurrentUser().getEmail();
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.basic());
 
-    Message message = new Message(user, text);
+    Message message = new Message(user, text + '\n' + getUploadedFileUrlToImageSource(request, "image"));
     datastore.storeMessage(message);
 
-    response.sendRedirect("/user-page.html?user=" + user);
+    response.sendRedirect("/users/" + user);
+  }
+
+  /**
+   * Returns a URL that points to the uploaded file, or null if the user didn't upload a file.
+   */
+  private String getUploadedFileUrlToImageSource(HttpServletRequest request, String formInputElementName){
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    List<BlobKey> blobKeys = blobs.get(formInputElementName);
+
+    // User submitted form without selecting a file, so we can't get a URL. (devserver)
+    if(blobKeys == null || blobKeys.isEmpty()) {
+      return "";
+    }
+
+    // Our form only contains a single file input, so get the first index.
+    BlobKey blobKey = blobKeys.get(0);
+
+    // User submitted form without selecting a file, so we can't get a URL. (live server)
+    BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
+    if (blobInfo.getSize() == 0) {
+      blobstoreService.delete(blobKey);
+      return "";
+    }
+
+    // We could check the validity of the file here, e.g. to make sure it's an image file
+    // https://stackoverflow.com/q/10779564/873165
+
+    // Use ImagesService to get a URL that points to the uploaded file.
+    ImagesService imagesService = ImagesServiceFactory.getImagesService();
+    ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
+    return "<img src=\"" + imagesService.getServingUrl(options) + "\">";
   }
 }
