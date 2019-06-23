@@ -40,7 +40,7 @@ public class SettingServlet extends HttpServlet {
         if (userService.isUserLoggedIn()) {
             String userEmail = userService.getCurrentUser().getEmail();
 
-            User user = datastore.getUser(userEmail);
+            User user = datastore.getUser("test@example.com");
             System.out.println(userEmail);
 
 //            Set<String> users = datastore.getUsers();

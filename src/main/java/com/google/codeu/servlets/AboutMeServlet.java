@@ -43,7 +43,7 @@ public class AboutMeServlet extends HttpServlet {
             return;
         }
 
-        User userData = datastore.getUser(user);
+        User userData = datastore.getUser("test@example.com");
 
         if(userData == null || userData.getAboutMe() == null) {
             return;

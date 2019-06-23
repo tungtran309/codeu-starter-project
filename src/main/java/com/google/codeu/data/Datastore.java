@@ -55,9 +55,13 @@ public class Datastore {
   public void Test() {
     Query query = new Query("User");
     PreparedQuery results = datastore.prepare(query);
+
+    int cnt = 0;
     for(Entity entity : results.asIterable()) {
       System.out.println((String)entity.getProperty("email") + " - " + (String)entity.getProperty("aboutMe") + " - " + (String)entity.getProperty("displayedName"));
+      ++cnt;
     }
+    System.out.println(cnt);
   }
 
   /**
