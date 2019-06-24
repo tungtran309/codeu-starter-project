@@ -25,8 +25,19 @@ if (!parameterUsername) {
 
 /** Sets the page title based on the URL parameter username. */
 function setPageTitle() {
-  document.getElementById('page-title').innerText = parameterUsername;
-  document.title = parameterUsername + ' - User Page';
+    fetch('/setting')
+        .then((response) => {
+            return response.json();
+        })
+        .then((userSetting) => {
+            let displayedName = parameterUsername;
+            if (userSetting.displayedName !== '')
+                displayedName = userSetting.displayedName;
+
+            document.getElementById('page-title').innerText = displayedName;
+            document.title = displayedName + ' - User Page';
+        });
+
 }
 
 /**
