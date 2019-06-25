@@ -37,6 +37,7 @@ function addLoginOrLogoutLinkToNavigation() {
           navigationElement.appendChild(createListItem(createLink('community.html', 'Community')));
           navigationElement.appendChild(
               createListItem(createLink('/logout', 'Logout')));
+          navigationElement.appendChild(createListItem(createLink('image.jsp', 'Image Analysis')));
         } else {
           navigationElement.appendChild(
               createListItem(createLink('/login', 'Login')));
