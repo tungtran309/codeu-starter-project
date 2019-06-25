@@ -37,15 +37,15 @@ public class UserServlet extends HttpServlet {
 
         // Confirm that user is valid
         Set<String> users = datastore.getUsers();
+
         if (users.contains(user)) {
-            System.out.println("HEHEHE99" + user);
             User userData = datastore.getUser(user);
 
             // Fetch user messages
             List<Message> messages = datastore.getMessages(user);
             List<Message> messageWithImage = new ArrayList<>();
             messages.forEach(message -> {
-                Message replacedMessage = new Message(message.getUser(),ImageReplacement(message.getText()));
+                Message replacedMessage = new Message(message.getUser(), ImageReplacement(message.getText()));
                 messageWithImage.add(replacedMessage);
             });
 
@@ -58,10 +58,16 @@ public class UserServlet extends HttpServlet {
             }
 
             // Add them to the request
+            request.setAttribute("messages", messageWithImage);
             request.setAttribute("about",
                     aboutUser.equals("")? "This user has not entered any information yet." : aboutUser);
-            request.setAttribute("messages", messageWithImage);
+
             request.setAttribute("user", user);
+        } else { // If new user logged in
+            datastore.storeUser(new User(user, ""));
+            request.setAttribute("user", user);
+            request.setAttribute("messages", new ArrayList<>());
+            request.setAttribute("about", "This user has not entered any information yet.");
         }
 
         request.getRequestDispatcher("/WEB-INF/user.jsp").forward(request,response);
