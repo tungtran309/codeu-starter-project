@@ -29,6 +29,11 @@
     width: 100%;
 }
 
+.btn-primary{
+    background-color: rebeccapurple;
+    border-color: rebeccapurple
+}
+
 .jumbotron{
     padding-bottom: 0;
 }
