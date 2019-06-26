@@ -69,7 +69,7 @@ limitations under the License.
                     <br/>
                     <script>
                         const config = {removePlugins: [ 'Heading', 'List', 'ImageUpload']};
-                        ClassicEditor.create(document.getElementById('message-input'), config)
+                        ClassicEditor.create(document.getElementById('message-input'), config);
                     </script>
                 </form>
             </div>
