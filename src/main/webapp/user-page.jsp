@@ -31,6 +31,7 @@ limitations under the License.
         <script src="/js/navigation-loader.js??v=AUTO_INCREMENT_VERSION"></script>
         <script src="/js/user-page-loader.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
+        <script src="/js/map-loader.js"></script>
     </head>
     <body>
         <nav>
@@ -81,5 +82,23 @@ limitations under the License.
 
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/bootstrap.js"></script>
+        <script>
+            fetch('/login-status')
+                .then((response) => {
+                    return response.json();
+                })
+                .then((loginStatus) => {
+                    if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
+                        $.ajax({
+                            url: "https://geoip-db.com/jsonp",
+                            jsonpCallback: "callback",
+                            dataType: "jsonp",
+                            success: function( location ) {
+                            postMarker(location.latitude, location.longitude, loginStatus.username);
+                        }
+                    });
+                }
+            });
+        </script>
     </body>
 </html>
