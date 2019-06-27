@@ -25,21 +25,23 @@ function addLoginOrLogoutLinkToNavigation() {
         return;
     }
 
-    fetch('/login-status')
-        .then((response) => {
-            return response.json();
-        })
-        .then((loginStatus) => {
-            if (loginStatus.isLoggedIn) {
-                navigationElement.appendChild(createListItem(createLink('/user-page.jsp?user=' + loginStatus.username, 'Your Page')));
-                navigationElement.appendChild(createListItem(createLink('stats.html', 'Stats')));
-                navigationElement.appendChild(createListItem(createLink('community.html', 'Community')));
-                navigationElement.appendChild(createListItem(createLink('/logout', 'Logout')));
-            }
-            else {
-                navigationElement.appendChild(createListItem(createLink('/login', 'Login')));
-            }
-        });
+  fetch('/login-status')
+      .then((response) => {
+        return response.json();
+      })
+      .then((loginStatus) => {
+        if (loginStatus.isLoggedIn) {
+          navigationElement.appendChild(createListItem(createLink('/user-page.jsp?user=' + loginStatus.username, 'Your Page')));
+          navigationElement.appendChild(createListItem(createLink('stats.html', 'Stats')));
+          navigationElement.appendChild(createListItem(createLink('community.html', 'Community')));
+          navigationElement.appendChild(
+              createListItem(createLink('/logout', 'Logout')));
+          navigationElement.appendChild(createListItem(createLink('image.jsp', 'Image Analysis')));
+        } else {
+          navigationElement.appendChild(
+              createListItem(createLink('/login', 'Login')));
+        }
+      });
 }
 
 /**
