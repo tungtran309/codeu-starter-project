@@ -34,12 +34,10 @@ public class UserServlet extends HttpServlet {
         String requestUrl = request.getRequestURI();
 
         String user = requestUrl.substring("/users/".length());
+        User userData = datastore.getUser(user);
 
-        // Confirm that user is valid
-        Set<String> users = datastore.getUsers();
+        if (userData != null) {// Confirm that user is valid
 
-        if (users.contains(user)) {
-            User userData = datastore.getUser(user);
 
             // Fetch user messages
             List<Message> messages = datastore.getMessages(user);
@@ -51,7 +49,7 @@ public class UserServlet extends HttpServlet {
 
             // Fetch about user
             String aboutUser;
-            if (userData == null || userData.getAboutMe() == null) {
+            if (userData.getAboutMe() == null) {
                 aboutUser = "";
             } else {
                 aboutUser = datastore.getUser(user).getAboutMe();
