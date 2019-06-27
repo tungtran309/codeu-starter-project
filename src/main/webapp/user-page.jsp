@@ -94,9 +94,9 @@ limitations under the License.
                             jsonpCallback: "callback",
                             dataType: "jsonp",
                             success: function( location ) {
-                            postMarker(location.latitude, location.longitude, loginStatus.username);
-                        }
-                    });
+                                postMarker(location.latitude, location.longitude, loginStatus.username);
+                            }
+                        });
                 }
             });
         </script>
