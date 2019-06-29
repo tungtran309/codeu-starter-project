@@ -19,11 +19,11 @@
  * already logged in.
  */
 function addLoginOrLogoutLinkToNavigation() {
-  const navigationElement = document.getElementById('navigation');
-  if (!navigationElement) {
-    console.warn('Navigation element not found!');
-    return;
-  }
+    const navigationElement = document.getElementById('navigation');
+    if (!navigationElement) {
+        console.warn('Navigation element not found!');
+        return;
+    }
 
   fetch('/login-status')
       .then((response) => {
@@ -31,8 +31,7 @@ function addLoginOrLogoutLinkToNavigation() {
       })
       .then((loginStatus) => {
         if (loginStatus.isLoggedIn) {
-          navigationElement.appendChild(createListItem(createLink(
-              '/user-page.jsp?user=' + loginStatus.username, 'Your Page')));
+          navigationElement.appendChild(createListItem(createLink('/user-page.jsp?user=' + loginStatus.username, 'Your Page')));
           navigationElement.appendChild(createListItem(createLink('stats.html', 'Stats')));
           navigationElement.appendChild(createListItem(createLink('community.html', 'Community')));
           navigationElement.appendChild(
@@ -51,9 +50,9 @@ function addLoginOrLogoutLinkToNavigation() {
  * @return {Element} li element
  */
 function createListItem(childElement) {
-  const listItemElement = document.createElement('li');
-  listItemElement.appendChild(childElement);
-  return listItemElement;
+    const listItemElement = document.createElement('li');
+    listItemElement.appendChild(childElement);
+    return listItemElement;
 }
 
 /**
@@ -63,8 +62,8 @@ function createListItem(childElement) {
  * @return {Element} Anchor element
  */
 function createLink(url, text) {
-  const linkElement = document.createElement('a');
-  linkElement.appendChild(document.createTextNode(text));
-  linkElement.href = url;
-  return linkElement;
+    const linkElement = document.createElement('a');
+    linkElement.appendChild(document.createTextNode(text));
+    linkElement.href = url;
+    return linkElement;
 }
