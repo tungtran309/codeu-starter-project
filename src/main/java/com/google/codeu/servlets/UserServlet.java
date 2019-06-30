@@ -62,7 +62,7 @@ public class UserServlet extends HttpServlet {
 
             request.setAttribute("user", user);
         } else { // If new user logged in
-            datastore.storeUser(new User(user, ""));
+            datastore.storeUser(new User(user, "", ""));
             request.setAttribute("user", user);
             request.setAttribute("messages", new ArrayList<>());
             request.setAttribute("about", "This user has not entered any information yet.");

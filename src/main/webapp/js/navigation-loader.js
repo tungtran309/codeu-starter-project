@@ -42,7 +42,7 @@ function addLoginOrLogoutLinkToNavigation() {
           navigationElement.appendChild(createListItem(createLink(
               '/setting.html', 'Setting'), true));
           navigationElement.appendChild(createListItem(createLink(
-              /users/' + loginStatus.username, 'Your Page'), true));
+              '/users/' + loginStatus.username, 'Your Page'), true));
 	      } else {
           navigationElement.appendChild(
               createListItem(createLink('/login', 'Login'), true));
