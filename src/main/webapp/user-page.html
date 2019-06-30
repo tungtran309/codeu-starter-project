@@ -35,11 +35,13 @@ limitations under the License.
                 <script>addLoginOrLogoutLinkToNavigation();</script>
             </ul>
         </nav>
-        <div class="jumbotron">
+        <div class="display-4 text-center">
             <h1 id="page-title">User Page</h1>
         </div>
         <div class="container-fluid">
-            <div id="about-me-container" class="form-group"> Loading...</div>
+            <div id="about-me-container" class="form-group text-center"> Loading...</div>
+            <hr/>
+
             <div class="form-group">
                 <form id="about-me-form" action="/about" method="POST" class="hidden">
                     <textarea id="about-me-input" name="about-me" placeholder="about me" class="form-control" rows=4 required></textarea>
@@ -47,6 +49,7 @@ limitations under the License.
                     <input type="submit" value="Submit" class="btn btn-primary" style="background-color: rebeccapurple; border-color: rebeccapurple">
                 </form>
             </div>
+            <hr/>
 
             <div class="form-group">
                 <form id="message-form" action="/messages" method="POST" class="hidden">

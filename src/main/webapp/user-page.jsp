@@ -41,18 +41,23 @@ limitations under the License.
                 <script>addLoginOrLogoutLinkToNavigation();</script>
             </ul>
         </nav>
-        <div class="jumbotron">
+        <div class="display-4 text-center">
             <h1 id="page-title">User Page</h1>
         </div>
         <div class="container-fluid">
-            <div id="about-me-container" class="form-group">Loading...</div>
+            <div id="about-me-container" class="form-group text-center"> Loading...</div>
+
             <div class="form-group">
                 <form id="about-me-form" action="/about" method="POST" class="hidden">
-                    <textarea id="about-me-input" name="about-me" placeholder="about me" class="form-control" rows=4 required></textarea>
+                    Enter new 'About me' section:
                     <br/>
-                    <input type="submit" value="Submit" class="btn btn-primary">
+                    <textarea id="about-me-input" name="about-me" placeholder="About me" class="form-control" rows=4 required></textarea>
+                    <br/>
+                    <input type="submit" value="Update" class="btn btn-primary">
                 </form>
             </div>
+
+            <hr/>
 
             <div class="form-group">
                 <form id="message-form" action="<%= uploadUrl %>" method="POST" class="hidden" enctype="multipart/form-data">
@@ -66,7 +71,7 @@ limitations under the License.
                         <label class="custom-file-label" for="inputFile">Choose file</label>
                     </div>
                     <br/><br/>
-                    <input type="submit" value="Submit" class="btn btn-primary">
+                    <input type="submit" value="Post" class="btn btn-primary">
                     <br/>
                     <script>
                         const config = {removePlugins: [ 'Heading', 'List', 'ImageUpload']};
@@ -74,8 +79,12 @@ limitations under the License.
                     </script>
                 </form>
             </div>
+
             <hr/>
 
+            <div class="container-fluid">
+                <h2 class="text-center">Posted Messages</h2>
+            </div>
             <div id="message-container">Loading...</div>
             <script>buildUI();</script>
         </div>
