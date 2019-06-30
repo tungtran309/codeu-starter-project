@@ -42,7 +42,7 @@ function addLoginOrLogoutLinkToNavigation() {
           navigationElement.appendChild(createListItem(createLink(
               '/setting.html', 'Setting'), true));
           navigationElement.appendChild(createListItem(createLink(
-              '/user-page.jsp?user=' + loginStatus.username, 'Your Page'), true));
+              /users/' + loginStatus.username, 'Your Page'), true));
 	      } else {
           navigationElement.appendChild(
               createListItem(createLink('/login', 'Login'), true));
@@ -53,7 +53,6 @@ function addLoginOrLogoutLinkToNavigation() {
 /**
  * Creates an li element.
  * @param {Element} childElement
- * @param {boolean} isRightAligned
  * @return {Element} li element
  */
 function createListItem(childElement, isRightAligned) {
