@@ -93,6 +93,19 @@ public class Datastore {
     return results.countEntities(FetchOptions.Builder.withDefaults());
   }
 
+  /** Returns the total number of users. */
+  public int getTotalUserCount(){
+    Query query = new Query("User");
+    PreparedQuery results = datastore.prepare(query);
+    return results.countEntities(FetchOptions.Builder.withDefaults());
+  }
+
+  /** Returns the number of active users (posted at least one meme). */
+  public int getActiveUserCount(){
+    Set<String> users = getUsers();
+    return users.size();
+  }
+
   /**
    * Gets messages posted by a specific user.
    *

@@ -7,8 +7,9 @@ function fetchStats(){
         const statsContainer = document.getElementById('stats-container');
         statsContainer.innerHTML = '';
 
-        const messageCountElement = buildStatElement('Total meme count: ' + stats.messageCount);
-        statsContainer.appendChild(messageCountElement);
+        statsContainer.appendChild(buildStatElement('Total meme count: ' + stats.messageCount));
+        statsContainer.appendChild(buildStatElement('Total user count: ' + stats.totalUserCount));
+        statsContainer.appendChild(buildStatElement('Active user* count: ' + stats.activeUserCount));
     });
 }
 
