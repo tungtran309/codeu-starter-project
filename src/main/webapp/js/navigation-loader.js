@@ -27,20 +27,21 @@ function addLoginOrLogoutLinkToNavigation() {
 
   fetch('/login-status')
       .then((response) => {
-        return response.json();
+          return response.json();
       })
       .then((loginStatus) => {
-        if (loginStatus.isLoggedIn) {
-          navigationElement.appendChild(createListItem(createLink('/user-page.jsp?user=' + loginStatus.username, 'Your Page')));
-          navigationElement.appendChild(createListItem(createLink('stats.html', 'Stats')));
-          navigationElement.appendChild(createListItem(createLink('community.html', 'Community')));
-          navigationElement.appendChild(
-              createListItem(createLink('/logout', 'Logout')));
-          navigationElement.appendChild(createListItem(createLink('image.jsp', 'Image Analysis')));
-        } else {
-          navigationElement.appendChild(
-              createListItem(createLink('/login', 'Login')));
-        }
+          if (loginStatus.isLoggedIn) {
+              navigationElement.appendChild(createListItem(createLink('/user-page.jsp?user=' + loginStatus.username, 'Your Page')));
+              navigationElement.appendChild(createListItem(createLink('stats.html', 'Stats')));
+              navigationElement.appendChild(createListItem(createLink('community.html', 'Community')));
+              navigationElement.appendChild(createListItem(createLink('map.html', 'Map')));
+              navigationElement.appendChild(createListItem(createLink('chart.html', 'Chart')));
+              navigationElement.appendChild(createListItem(createLink('feed.html', 'Message Feed')));
+              navigationElement.appendChild(createListItem(createLink('image.jsp', 'Image Analysis')));
+              navigationElement.appendChild(createListItem(createLink('/logout', 'Logout')));
+          } else {
+              navigationElement.appendChild(createListItem(createLink('/login', 'Login')));
+          }
       });
 }
 
