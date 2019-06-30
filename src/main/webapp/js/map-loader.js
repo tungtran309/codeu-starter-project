@@ -3,8 +3,8 @@ let editMarker;
 
 function createMap() {
     map = new google.maps.Map(document.getElementById('map'),{
-        center: {lat: 16.3290223, lng: 106.3898982},
-        zoom: 6
+        center: {lat: 13.567373, lng: 107.8208694},
+        zoom: 5
     });
     fetchMarkers();
 }
