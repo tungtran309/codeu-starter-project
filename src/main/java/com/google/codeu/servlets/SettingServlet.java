@@ -39,18 +39,8 @@ public class SettingServlet extends HttpServlet {
 
         if (userService.isUserLoggedIn()) {
             String userEmail = userService.getCurrentUser().getEmail();
-
-            User user = datastore.getUser("test@example.com");
-            System.out.println(userEmail);
-
-//            Set<String> users = datastore.getUsers();
-//            for(String s: users)
-//                System.out.println(s);
-
-            String displayedName = user.getDisplayedName();
-            System.out.println(displayedName);
-
-            jsonObject.addProperty("displayedName", displayedName);
+            User user = datastore.getUser(userEmail);
+            jsonObject.addProperty("displayedName", user.getDisplayedName());
         } else {
             response.getWriter().println("{}");
             return;
