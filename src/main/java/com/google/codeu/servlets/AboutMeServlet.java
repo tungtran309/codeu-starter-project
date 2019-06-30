@@ -27,30 +27,6 @@ public class AboutMeServlet extends HttpServlet {
         datastore = new Datastore();
     }
 
-    /**
-     * Responds with the "about me" section for a particular user.
-     */
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-
-        response.setContentType("text/html");
-
-        String user = request.getParameter("user");
-
-        if(user == null || user.equals("")) {
-            // Request is invalid, return empty response
-            return;
-        }
-
-        User userData = datastore.getUser(user);
-
-        if(userData == null || userData.getAboutMe() == null) {
-            return;
-        }
-
-        response.getOutputStream().println(userData.getAboutMe());
-    }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
