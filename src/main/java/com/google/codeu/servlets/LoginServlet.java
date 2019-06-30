@@ -19,12 +19,11 @@ package com.google.codeu.servlets;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-
+import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Redirects the user to the Google login page or their page if they're already logged in.
@@ -40,7 +39,7 @@ public class LoginServlet extends HttpServlet {
     // If the user is already logged in, redirect to their page
     if (userService.isUserLoggedIn()) {
       String user = userService.getCurrentUser().getEmail();
-      response.sendRedirect("/user-page.jsp?user=" + user);
+      response.sendRedirect("/users/" + user);
       return;
     }
 
