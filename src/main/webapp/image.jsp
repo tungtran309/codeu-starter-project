@@ -43,7 +43,7 @@
                     <p>Upload an image:</p>
                     <input type="file" name="image">
                     <br/><br/>
-                    <button>Submit</button>
+                    <input type="submit" value="Submit" class="btn btn-primary">
                 </form>
             </div>
         </div>
