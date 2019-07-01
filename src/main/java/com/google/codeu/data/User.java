@@ -4,10 +4,12 @@ public class User {
 
     private String email;
     private String aboutMe;
+    private String displayedName;
 
-    public User(String email, String aboutMe) {
+    public User(String email, String aboutMe, String displayedName) {
         this.email = email;
         this.aboutMe = aboutMe;
+        this.displayedName = displayedName;
     }
 
     public String getEmail(){
@@ -17,4 +19,6 @@ public class User {
     public String getAboutMe() {
         return aboutMe;
     }
+
+    public String getDisplayedName() {return displayedName;}
 }

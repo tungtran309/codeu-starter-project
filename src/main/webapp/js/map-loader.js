@@ -36,7 +36,7 @@ function createMarkerForDisplay(lat, lng, content) {
     });
 
     marker.addListener('click', () => {
-        window.location.href = createLink('/user-page.jsp?user=' + content);
+        window.location.href = createLink('/users/' + content);
     });
 }
 
