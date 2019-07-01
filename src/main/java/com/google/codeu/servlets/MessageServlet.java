@@ -22,6 +22,7 @@ import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.cloud.vision.v1.EntityAnnotation;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
 import com.google.gson.Gson;
@@ -111,7 +112,7 @@ public class MessageServlet extends HttpServlet {
   /**
    * Returns a URL that points to the uploaded file, or null if the user didn't upload a file.
    */
-  private String getUploadedFileUrlToImageSource(HttpServletRequest request, String formInputElementName){
+  private String getUploadedFileUrlToImageSource(HttpServletRequest request, String formInputElementName) throws IOException {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
     List<BlobKey> blobKeys = blobs.get(formInputElementName);
@@ -130,6 +131,13 @@ public class MessageServlet extends HttpServlet {
       blobstoreService.delete(blobKey);
       return null;
     }
+    byte[] blobBytes = ImageAnalysisServlet.getBlobBytes(blobKey);
+    List<EntityAnnotation> imageLabels = ImageAnalysisServlet.getImageLabels(blobBytes);
+    StringBuilder prefix = new StringBuilder("\n");
+    for(EntityAnnotation label : imageLabels){
+      prefix.append("<li>" + label.getDescription() + " " + label.getScore() + "\n");
+    }
+
 
     //TODO : Check the validity of the file here, e.g. to make sure it's an image file
     // https://stackoverflow.com/q/10779564/873165
@@ -137,6 +145,6 @@ public class MessageServlet extends HttpServlet {
     // Use ImagesService to get a URL that points to the uploaded file.
     ImagesService imagesService = ImagesServiceFactory.getImagesService();
     ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
-    return "<img src=\"" + imagesService.getServingUrl(options) + "\">";
+    return "<img src=\"" + imagesService.getServingUrl(options) + "\">" + prefix;
   }
 }
