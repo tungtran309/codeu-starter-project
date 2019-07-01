@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+.btn-primary{
+    background-color: rebeccapurple;
+    border-color: rebeccapurple
+}
+
 .container-fluid{
     padding: 30px;
     padding-top: 0;
