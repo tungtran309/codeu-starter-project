@@ -19,29 +19,31 @@
  * already logged in.
  */
 function addLoginOrLogoutLinkToNavigation() {
-  const navigationElement = document.getElementById('navigation');
-  if (!navigationElement) {
-    console.warn('Navigation element not found!');
-    return;
-  }
+    const navigationElement = document.getElementById('navigation');
+    if (!navigationElement) {
+        console.warn('Navigation element not found!');
+        return;
+    }
 
-  fetch('/login-status')
-      .then((response) => {
-          return response.json();
-      })
-      .then((loginStatus) => {
-          if (loginStatus.isLoggedIn) {
-              navigationElement.appendChild(createListItem(createLink('/users/' + loginStatus.username, 'Your Page'), true));
-              navigationElement.appendChild(createListItem(createLink('stats.html', 'Stats')));
-              navigationElement.appendChild(createListItem(createLink('map.html', 'Map')));
-              navigationElement.appendChild(createListItem(createLink('feed.html', 'Message Feed')));
-              navigationElement.appendChild(createListItem(createLink('image.jsp', 'Image Analysis')));
-              navigationElement.appendChild(createListItem(createLink('/setting.html', 'Setting'), true));
-              navigationElement.appendChild(createListItem(createLink('/logout', 'Logout')));
-          } else {
-              navigationElement.appendChild(createListItem(createLink('/login', 'Login')));
-          }
-      });
+    fetch('/login-status')
+        .then((response) => {
+            return response.json();
+        })
+        .then((loginStatus) => {
+            if (loginStatus.isLoggedIn) {
+            navigationElement.appendChild(createListItem(createLink('stats.html', 'Stats')), false);
+            navigationElement.appendChild(createListItem(createLink('map.html', 'Map')), false);
+            navigationElement.appendChild(createListItem(createLink('feed.html', 'Message Feed')), false);
+            navigationElement.appendChild(createListItem(createLink('image.jsp', 'Image Analysis'), false));
+
+            navigationElement.appendChild(createListItem(createLink('/logout', 'Logout'), true));
+            navigationElement.appendChild(createListItem(createLink('/setting.html', 'Setting'), true));
+            navigationElement.appendChild(createListItem(createLink('/users/' + loginStatus.username, 'Your Page'), true));
+        } else {
+            navigationElement.appendChild(
+                createListItem(createLink('/login', 'Login'), true));
+            }
+        });
 }
 
 /**
@@ -50,11 +52,11 @@ function addLoginOrLogoutLinkToNavigation() {
  * @return {Element} li element
  */
 function createListItem(childElement, isRightAligned) {
-  const listItemElement = document.createElement('li');
-  if (isRightAligned)
-    listItemElement.classList.add('right');
-  listItemElement.appendChild(childElement);
-  return listItemElement;
+    const listItemElement = document.createElement('li');
+    if (isRightAligned)
+        listItemElement.classList.add('right');
+    listItemElement.appendChild(childElement);
+    return listItemElement;
 }
 
 /**
@@ -64,8 +66,8 @@ function createListItem(childElement, isRightAligned) {
  * @return {Element} Anchor element
  */
 function createLink(url, text) {
-  const linkElement = document.createElement('a');
-  linkElement.appendChild(document.createTextNode(text));
-  linkElement.href = url;
-  return linkElement;
+    const linkElement = document.createElement('a');
+    linkElement.appendChild(document.createTextNode(text));
+    linkElement.href = url;
+    return linkElement;
 }
