@@ -56,7 +56,7 @@ public class UserServlet extends HttpServlet {
             }
 
             String displayedName = userData.getDisplayedName();
-            if (displayedName.equals(""))
+            if (displayedName == null || displayedName.equals(""))
                 displayedName = user;
 
             // Add them to the request

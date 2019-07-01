@@ -16,9 +16,15 @@
 <body>
     <nav>
         <ul id="navigation">
-            <li><a href="/">Home</a></li>
-            <li><a href="/aboutus.html">About Our Team</a></li>
-            <script>addLoginOrLogoutLinkToNavigation();</script>
+            <li><a href="${pageContext.request.contextPath}/">Home</a></li>
+            <li><a href="${pageContext.request.contextPath}/aboutus.html">About Our Team</a></li>
+            <li><a href="${pageContext.request.contextPath}/stats.html">Stats</a></li>
+            <li><a href="${pageContext.request.contextPath}/community.html">Community</a></li>
+            <li><a href="${pageContext.request.contextPath}/image.jsp">Image Analysis</a></li>
+
+            <li class="right"><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
+            <li class="right"><a href="${pageContext.request.contextPath}/setting.html">Setting</a></li>
+            <li class="right"><a href="${pageContext.request.contextPath}/users/<%=request.getAttribute("user")%>">Your Page</a></li>
         </ul>
     </nav>
 
