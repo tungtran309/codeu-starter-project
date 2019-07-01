@@ -42,7 +42,6 @@ limitations under the License.
         <li><a href="${pageContext.request.contextPath}/aboutus.html">About Our Team</a></li>
         <li><a href="${pageContext.request.contextPath}/stats.html">Stats</a></li>
         <li><a href="${pageContext.request.contextPath}/community.html">Community</a></li>
-        <li><a href="${pageContext.request.contextPath}/image.jsp">Image Analysis</a></li>
 
         <li class="right"><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
         <li class="right"><a href="${pageContext.request.contextPath}/setting.html">Setting</a></li>
