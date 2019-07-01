@@ -16,6 +16,7 @@
 
 package com.google.codeu.servlets;
 
+import com.google.common.flogger.FluentLogger;
 import com.google.appengine.api.blobstore.*;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
@@ -38,8 +39,9 @@ import javax.servlet.http.HttpServletResponse;
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
 public class MessageServlet extends HttpServlet {
-
   private Datastore datastore;
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+
 
   @Override
   public void init() {
@@ -50,7 +52,6 @@ public class MessageServlet extends HttpServlet {
   /** Stores a new {@link Message}. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
     UserService userService = UserServiceFactory.getUserService();
     if (!userService.isUserLoggedIn()) {
       response.sendRedirect("/index.html");
