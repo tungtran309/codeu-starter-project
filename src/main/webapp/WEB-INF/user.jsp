@@ -50,10 +50,11 @@ limitations under the License.
     </ul>
 </nav>
 <div class="jumbotron">
-    <h1 id="page-title"><%=request.getAttribute("user")%></h1>
+    <h1 id="page-title"><%=request.getAttribute("displayedName")%></h1>
 </div>
 <div class="container-fluid">
-    <div id="about-me-container" class="form-group"><%=request.getAttribute("about")%>
+    <div id="about-me-container" class="form-group">
+        <%=request.getAttribute("about")%>
     </div>
     <div class="form-group">
         <form id="about-me-form" action="/about" method="POST">

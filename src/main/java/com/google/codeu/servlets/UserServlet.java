@@ -52,20 +52,25 @@ public class UserServlet extends HttpServlet {
             if (userData.getAboutMe() == null) {
                 aboutUser = "";
             } else {
-                aboutUser = datastore.getUser(user).getAboutMe();
+                aboutUser = userData.getAboutMe();
             }
+
+            String displayedName = userData.getDisplayedName();
+            if (displayedName.equals(""))
+                displayedName = user;
 
             // Add them to the request
             request.setAttribute("messages", messageWithImage);
             request.setAttribute("about",
-                    aboutUser.equals("")? "This user has not entered any information yet." : aboutUser);
-
+                    aboutUser.equals("") ? "This user has not entered any information yet." : aboutUser);
             request.setAttribute("user", user);
+            request.setAttribute("displayedName", displayedName);
         } else { // If new user logged in
             datastore.storeUser(new User(user, "", ""));
             request.setAttribute("user", user);
             request.setAttribute("messages", new ArrayList<>());
             request.setAttribute("about", "This user has not entered any information yet.");
+            request.setAttribute("displayedName", user);
         }
 
         request.getRequestDispatcher("/WEB-INF/user.jsp").forward(request,response);
