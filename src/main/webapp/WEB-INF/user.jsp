@@ -61,8 +61,7 @@ limitations under the License.
                     <textarea id="about-me-input" name="about-me" placeholder="about me" class="form-control" rows=4
                               required></textarea>
                     <br/>
-                    <input type="submit" value="Submit" class="btn btn-primary"
-                           style="background-color: rebeccapurple; border-color: rebeccapurple">
+                    <input type="submit" value="Submit" class="btn btn-primary">
                 </form>
             </div>
 
@@ -75,8 +74,7 @@ limitations under the License.
                     <br/>
                     <input type="file" name="image" />
                     <br/><br/>
-                    <input type="submit" value="Submit" class="btn btn-primary"
-                           style="background-color: rebeccapurple; border-color: rebeccapurple">
+                    <input type="submit" value="Submit" class="btn btn-primary">
                     <script>
                         const config = {removePlugins: ['Heading', 'List', 'ImageUpload']};
                         ClassicEditor.create(document.getElementById('message-input'), config)
