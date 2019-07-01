@@ -24,7 +24,9 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
-import com.google.gson.Gson;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
@@ -32,10 +34,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -48,45 +46,6 @@ public class MessageServlet extends HttpServlet {
     datastore = new Datastore();
   }
 
-  /**
-   * Responds with a JSON representation of {@link Message} data for a specific user. Responds with
-   * an empty array if the user is not provided.
-   */
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-    response.setContentType("application/json");
-
-    String user = request.getParameter("user");
-
-    if (user == null || user.equals("")) {
-      // Request is invalid, return empty array
-      response.getWriter().println("[]");
-      return;
-    }
-
-    List<Message> messages = datastore.getMessages(user);
-    List<Message> messageWithImage = new ArrayList<>();
-    messages.forEach(message -> {
-      Message replacedMessage = new Message(message.getUser(),ImageReplacement(message.getText()));
-      messageWithImage.add(replacedMessage);
-    });
-    Gson gson = new Gson();
-    String json = gson.toJson(messageWithImage);
-
-    response.getWriter().println(json);
-  }
-
-  /**
-   * Return correct form of image for message
-   */
-  private String ImageReplacement(String rawMessage) {
-    String regex = "(https?://\\S+\\.(png|jpg))";
-    String replacement = "<img src=\"$1\" />";
-
-    return rawMessage
-            .replaceAll(regex, replacement);
-  }
 
   /** Stores a new {@link Message}. */
   @Override
@@ -104,9 +63,8 @@ public class MessageServlet extends HttpServlet {
     Message message = new Message(user, text + '\n' + getUploadedFileUrlToImageSource(request, "image"));
     datastore.storeMessage(message);
 
-    response.sendRedirect("/user-page.jsp?user=" + user);
+    response.sendRedirect("/users/" + user);
   }
-
 
   /**
    * Returns a URL that points to the uploaded file, or null if the user didn't upload a file.
@@ -118,7 +76,7 @@ public class MessageServlet extends HttpServlet {
 
     // User submitted form without selecting a file, so we can't get a URL. (devserver)
     if(blobKeys == null || blobKeys.isEmpty()) {
-      return null;
+      return "";
     }
 
     // Our form only contains a single file input, so get the first index.
@@ -128,10 +86,10 @@ public class MessageServlet extends HttpServlet {
     BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
     if (blobInfo.getSize() == 0) {
       blobstoreService.delete(blobKey);
-      return null;
+      return "";
     }
 
-    //TODO : Check the validity of the file here, e.g. to make sure it's an image file
+    // We could check the validity of the file here, e.g. to make sure it's an image file
     // https://stackoverflow.com/q/10779564/873165
 
     // Use ImagesService to get a URL that points to the uploaded file.

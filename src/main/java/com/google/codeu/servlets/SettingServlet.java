@@ -1,6 +1,7 @@
 package com.google.codeu.servlets;
 
 import java.io.IOException;
+import java.util.Set;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,14 +12,15 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.User;
+import com.google.gson.JsonObject;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
 /**
  * Handles fetching and saving user data.
  */
-@WebServlet("/about")
-public class AboutMeServlet extends HttpServlet {
+@WebServlet("/setting")
+public class SettingServlet extends HttpServlet {
 
     private Datastore datastore;
 
@@ -27,6 +29,26 @@ public class AboutMeServlet extends HttpServlet {
         datastore = new Datastore();
     }
 
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+
+        JsonObject jsonObject = new JsonObject();
+
+        UserService userService = UserServiceFactory.getUserService();
+
+        if (userService.isUserLoggedIn()) {
+            String userEmail = userService.getCurrentUser().getEmail();
+            User user = datastore.getUser(userEmail);
+            jsonObject.addProperty("displayedName", user.getDisplayedName());
+        } else {
+            response.getWriter().println("{}");
+            return;
+        }
+
+        response.setContentType("application/json");
+        response.getWriter().println(jsonObject.toString());
+    }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -39,12 +61,12 @@ public class AboutMeServlet extends HttpServlet {
         }
 
         String userEmail = userService.getCurrentUser().getEmail();
-        String aboutMe = Jsoup.clean(request.getParameter("about-me"), Whitelist.none());
-        String displayedName = datastore.getUser(userEmail).getDisplayedName();
+        String aboutMe = datastore.getUser(userEmail).getAboutMe();
+        String displayedName = Jsoup.clean(request.getParameter("displayed-name"), Whitelist.none());
 
         User user = new User(userEmail, aboutMe, displayedName);
         datastore.storeUser(user);
 
-        response.sendRedirect("/users/" + userEmail);
+        response.sendRedirect("/setting.html");
     }
 }
