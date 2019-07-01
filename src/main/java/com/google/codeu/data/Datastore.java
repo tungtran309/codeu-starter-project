@@ -48,6 +48,7 @@ public class Datastore {
     Entity userEntity = new Entity("User", user.getEmail());
     userEntity.setProperty("email", user.getEmail());
     userEntity.setProperty("aboutMe", user.getAboutMe());
+    userEntity.setProperty("displayedName", user.getDisplayedName());
     datastore.put(userEntity);
   }
 
@@ -56,17 +57,18 @@ public class Datastore {
    * null if no matching User was found.
    */
   public User getUser(String email) {
-
     Query query = new Query("User")
             .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
     PreparedQuery results = datastore.prepare(query);
     Entity userEntity = results.asSingleEntity();
+
     if(userEntity == null) {
       return null;
     }
 
     String aboutMe = (String) userEntity.getProperty("aboutMe");
-    User user = new User(email, aboutMe);
+    String displayedName = (String) userEntity.getProperty("displayedName");
+    User user = new User(email, aboutMe, displayedName);
 
     return user;
   }
