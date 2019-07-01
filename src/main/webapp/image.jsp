@@ -9,26 +9,25 @@
         <meta charset="UTF-8">
         <title>Image Upload Analysis</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/css/user-page.css" rel="stylesheet">
-        <script src="${pageContext.request.contextPath}/js/map-loader.js"></script>
-        <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
     </head>
 
     <body>
-        <ul id="navigation">
-            <li><a href="${pageContext.request.contextPath}/">Home</a></li>
-            <li><a href="${pageContext.request.contextPath}/aboutus.html">About Our Team</a></li>
-            <li><a href="${pageContext.request.contextPath}/stats.html">Stats</a></li>
-            <li><a href="${pageContext.request.contextPath}/map.html">Map</a></li>
-            <li><a href="${pageContext.request.contextPath}/feed.html">Message Feed</a></li>
-            <li><a href="${pageContext.request.contextPath}/image.jsp">Image Analysis</a></li>
+        <nav>
+            <ul id="navigation">
+                <li><a href="${pageContext.request.contextPath}/">Home</a></li>
+                <li><a href="${pageContext.request.contextPath}/aboutus.html">About Our Team</a></li>
+                <li><a href="${pageContext.request.contextPath}/stats.html">Stats</a></li>
+                <li><a href="${pageContext.request.contextPath}/map.html">Map</a></li>
+                <li><a href="${pageContext.request.contextPath}/feed.html">Message Feed</a></li>
+                <li><a href="${pageContext.request.contextPath}/image.jsp">Image Analysis</a></li>
 
-            <li class="right"><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
-            <li class="right"><a href="${pageContext.request.contextPath}/setting.html">Setting</a></li>
-            <li class="right"><a href="${pageContext.request.contextPath}/users/<%=request.getAttribute("user")%>">Your Page</a></li>
-        </ul>
+                <li class="right"><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
+                <li class="right"><a href="${pageContext.request.contextPath}/setting.html">Setting</a></li>
+                <li class="right"><a href="${pageContext.request.contextPath}/users/<%=request.getAttribute("user")%>">Your Page</a></li>
+            </ul>
+        </nav>
 
         <div id="content">
             <div class="jumbotron">
@@ -47,5 +46,8 @@
                 </form>
             </div>
         </div>
+
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/bootstrap.js"></script>
     </body>
 </html>
