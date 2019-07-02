@@ -1,5 +1,10 @@
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory" %>
+<%@ page import="com.google.appengine.api.users.UserService" %>
+<%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
+
+
+
 <% BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     String uploadUrl = blobstoreService.createUploadUrl("/image-analysis"); %>
 
@@ -22,9 +27,17 @@
             <li><a href="${pageContext.request.contextPath}/community.html">Community</a></li>
             <li><a href="${pageContext.request.contextPath}/image.jsp">Image Analysis</a></li>
 
-            <li class="right"><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
-            <li class="right"><a href="${pageContext.request.contextPath}/setting.html">Setting</a></li>
-            <li class="right"><a href="${pageContext.request.contextPath}/users/<%=request.getAttribute("user")%>">Your Page</a></li>
+            <%
+                UserService userService = UserServiceFactory.getUserService();
+                if (userService.isUserLoggedIn()) {
+                    String username = userService.getCurrentUser().getEmail();
+            %>
+                <li class="right"><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
+                <li class="right"><a href="${pageContext.request.contextPath}/setting.html">Setting</a></li>
+                <li class="right"><a href="${pageContext.request.contextPath}/users/<%=username%>">Your Page</a></li>
+            <% } else { %>
+                <li class="right"><a href="${pageContext.request.contextPath}/login">Login</a></li>
+            <% } %>
         </ul>
     </nav>
 

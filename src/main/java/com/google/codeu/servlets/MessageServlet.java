@@ -40,8 +40,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/messages")
 public class MessageServlet extends HttpServlet {
   private Datastore datastore;
-  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
-
 
   @Override
   public void init() {
