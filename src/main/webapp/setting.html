@@ -16,41 +16,41 @@ limitations under the License.
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>User Setting</title>
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
-    <link href="/css/setting.css" rel="stylesheet">
-    <script src="/js/navigation-loader.js??v=AUTO_INCREMENT_VERSION"></script>
-    <script src="/js/setting-page-loader.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
-</head>
-<body>
-<nav>
-    <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-        <script>addLoginOrLogoutLinkToNavigation();</script>
-    </ul>
-</nav>
-<div class="jumbotron">
-    <h1 id="page-title">User Setting</h1>
-</div>
-<div class="container-fluid">
-    <div class="form-group">
-        <form id="setting-form" action="/setting" method="POST">
-            <p>Displayed Name:</p>
-            <textarea id="displayed-name-input" name="displayed-name" placeholder="Name that is displayed to everyone" class="form-control" required></textarea>
-            <br/>
-            <input type="submit" value="Submit" class="btn btn-primary" style="background-color: rebeccapurple; border-color: rebeccapurple">
-        </form>
-    </div>
-    <script>buildUI();</script>
-</div>
+    <head>
+        <title>User Setting</title>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
+        <link href="/css/setting.css" rel="stylesheet">
+        <script src="/js/navigation-loader.js??v=AUTO_INCREMENT_VERSION"></script>
+        <script src="/js/setting-page-loader.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
+    </head>
+    <body>
+        <nav>
+            <ul id="navigation">
+                <li><a href="/">Home</a></li>
+                <li><a href="/aboutus.html">About Our Team</a></li>
+                <script>addLoginOrLogoutLinkToNavigation();</script>
+            </ul>
+        </nav>
+        <div class="jumbotron">
+            <h1 id="page-title">User Setting</h1>
+        </div>
+        <div class="container-fluid">
+            <div class="form-group">
+                <form id="setting-form" action="/setting" method="POST">
+                    <p>Displayed Name:</p>
+                    <textarea id="displayed-name-input" name="displayed-name" placeholder="Name that is displayed to everyone" class="form-control" required></textarea>
+                    <br/>
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                </form>
+            </div>
+            <script>buildUI();</script>
+        </div>
 
-<script src="js/jquery-3.4.1.min.js"></script>
-<script src="js/bootstrap.js"></script>
-</body>
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+    </body>
 </html>

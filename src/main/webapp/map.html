@@ -6,9 +6,9 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
-        <script src="/js/navigation-loader.js??v=AUTO_INCREMENT_VERSION"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgXvSL-iqbwp65YUTn0hT_FiIlLUL-9x8"></script>
         <script src="/js/map-loader.js"></script>
+        <script src="/js/navigation-loader.js??v=AUTO_INCREMENT_VERSION"></script>
     </head>
 
     <body>
@@ -16,13 +16,18 @@
             <ul id="navigation">
                 <li><a href="/">Home</a></li>
                 <li><a href="/aboutus.html">About Our Team</a></li>
+                <script>addLoginOrLogoutLinkToNavigation();</script>
             </ul>
         </nav>
         <div class="jumbotron">
-            <h1>Map of Vietnam</h1>
+            <h1>A Map To Explore</h1>
         </div>
-        <div id="map" class="container-fluid">
-            <script>createMap();</script>
+        <div class="container-fluid">
+            <p>You can click on a random marker on the Map to go to that random user's page.</p>
+            <br>
+            <div id="map">
+                <script>createMap();</script>
+            </div>
         </div>
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/bootstrap.js"></script>

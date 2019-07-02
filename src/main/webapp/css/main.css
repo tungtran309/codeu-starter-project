@@ -14,9 +14,15 @@
  * limitations under the License.
  */
 
+.btn-primary{
+    background-color: rebeccapurple;
+    border-color: rebeccapurple
+}
+
 .container-fluid{
     padding: 30px;
     padding-top: 0;
+    margin-top: 0;
 }
 
 .jumbotron{
@@ -30,7 +36,7 @@
 }
 
 #map{
-    width: 95%;
+    width: 100%;
     height: 600px;
     border: thin solid black;
 }
