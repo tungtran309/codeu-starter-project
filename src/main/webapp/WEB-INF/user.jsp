@@ -99,9 +99,7 @@ limitations under the License.
                         %>This user has no posts yet<%
                     } else {
                         for (Message message : messages) {
-                            FluentLogger logger = FluentLogger.forEnclosingClass();
-                            logger.atInfo().log(message.getText());
-                %>
+                        %>
                             <div class="message-div">
                                 <div class="message-header"><%=message.getUser()%> - <%= new Date(message.getTimestamp())%>
                                 </div>
