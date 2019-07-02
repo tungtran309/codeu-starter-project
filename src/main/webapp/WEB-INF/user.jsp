@@ -41,8 +41,8 @@ limitations under the License.
         <li><a href="${pageContext.request.contextPath}/">Home</a></li>
         <li><a href="${pageContext.request.contextPath}/aboutus.html">About Our Team</a></li>
         <li><a href="${pageContext.request.contextPath}/stats.html">Stats</a></li>
-        <li><a href="${pageContext.request.contextPath}/community.html">Community</a></li>
-        <li><a href="${pageContext.request.contextPath}/image.jsp">Image Analysis</a></li>
+        <li><a href="${pageContext.request.contextPath}/map.html">Map</a></li>
+        <li><a href="${pageContext.request.contextPath}/feed.html">Message Feed</a></li>
 
         <li class="right"><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
         <li class="right"><a href="${pageContext.request.contextPath}/setting.html">Setting</a></li>
@@ -61,8 +61,7 @@ limitations under the License.
             <textarea id="about-me-input" name="about-me" placeholder="about me" class="form-control" rows=4
                       required></textarea>
             <br/>
-            <input type="submit" value="Submit" class="btn btn-primary"
-                   style="background-color: rebeccapurple; border-color: rebeccapurple">
+            <input type="submit" value="Submit" class="btn btn-primary">
         </form>
     </div>
 
@@ -75,8 +74,7 @@ limitations under the License.
             <br/>
             <input type="file" name="image" />
             <br/><br/>
-            <input type="submit" value="Submit" class="btn btn-primary"
-                   style="background-color: rebeccapurple; border-color: rebeccapurple">
+            <input type="submit" value="Submit" class="btn btn-primary">
             <script>
                 const config = {removePlugins: ['ImageUpload']};
                 ClassicEditor.create(document.getElementById('message-input'), config)
