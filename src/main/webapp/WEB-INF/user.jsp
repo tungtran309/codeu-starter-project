@@ -19,6 +19,7 @@ limitations under the License.
 <%@ page import="com.google.codeu.data.Message" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="com.google.common.flogger.FluentLogger" %>
 <% BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     String uploadUrl = blobstoreService.createUploadUrl("/messages");
     List<Message> messages = (List<Message>) request.getAttribute("messages"); %>
@@ -73,10 +74,10 @@ limitations under the License.
             <div class="form-group">
                 <form id="message-form" action="<%= uploadUrl %>" method="POST" enctype="multipart/form-data">
                     <textarea name="text" id="message-input" class="form-control"></textarea>
-                    <div class="field-with-label">
-                        Upload meme:
-                        <input type="file" name="image" style="margin-left: 15px"/>
-                    </div>
+                    <br/>
+                    Upload meme:
+                    <input type="file" name="image" style="margin-left: 15px"/>
+                    <br/>
                     <br/>
                     <input type="submit" value="Upload" class="btn btn-primary">
                     <script>
@@ -98,7 +99,9 @@ limitations under the License.
                         %>This user has no posts yet<%
                     } else {
                         for (Message message : messages) {
-                            %>
+                            FluentLogger logger = FluentLogger.forEnclosingClass();
+                            logger.atInfo().log(message.getText());
+                %>
                             <div class="message-div">
                                 <div class="message-header"><%=message.getUser()%> - <%= new Date(message.getTimestamp())%>
                                 </div>

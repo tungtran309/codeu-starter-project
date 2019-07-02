@@ -32,10 +32,12 @@ function buildMessageDiv(message) {
     headerDiv.classList.add('message-header');
     headerDiv.appendChild(usernameDiv);
     headerDiv.appendChild(timeDiv);
+
+    console.log(message.text);
  
     const bodyDiv = document.createElement('div');
     bodyDiv.classList.add('message-body');
-    bodyDiv.appendChild(document.createTextNode(message.text));
+    $(message.text).appendTo(bodyDiv);
  
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message-div');

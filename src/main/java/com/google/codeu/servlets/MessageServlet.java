@@ -84,9 +84,11 @@ public class MessageServlet extends HttpServlet {
     byte[] blobBytes = ImageAnalysisServlet.getBlobBytes(blobKey);
     List<EntityAnnotation> imageLabels = ImageAnalysisServlet.getImageLabels(blobBytes);
     StringBuilder prefix = new StringBuilder("\n");
+    prefix.append("<ul>");
     for(EntityAnnotation label : imageLabels){
-      prefix.append("<li>" + label.getDescription() + " " + label.getScore() + "\n");
+      prefix.append("<li>" + label.getDescription() + " " + label.getScore() + "\n" + "</li>");
     }
+    prefix.append("</ul>");
 
     // User submitted form without selecting a file, so we can't get a URL. (live server)
     BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
