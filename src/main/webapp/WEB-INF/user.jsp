@@ -89,10 +89,6 @@ limitations under the License.
 
             <hr/>
 
-            <div class="h2 text-center">
-                Message
-            </div>
-
             <div id="message-container">
                 <%
                     if (messages.size() == 0) {
