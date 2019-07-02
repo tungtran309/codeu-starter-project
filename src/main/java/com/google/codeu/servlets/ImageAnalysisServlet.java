@@ -26,52 +26,12 @@ import javax.servlet.http.HttpServletResponse;
  * and then forwards the request to this servlet. This servlet can then
  * analyze the image using the Vision API.
  */
-@WebServlet("/image-analysis")
 public class ImageAnalysisServlet extends HttpServlet {
-
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        PrintWriter out = response.getWriter();
-
-        // Get the message entered by the user.
-        String message = request.getParameter("message");
-
-        // Get the BlobKey that points to the image uploaded by the user.
-        BlobKey blobKey = getBlobKey(request, "image");
-
-        // User didn't upload a file, so render an error message.
-        if(blobKey == null) {
-            out.println("Please upload an image file.");
-            return;
-        }
-
-        // Get the URL of the image that the user uploaded.
-        String imageUrl = getUploadedFileUrl(blobKey);
-
-        // Get the labels of the image that the user uploaded.
-        byte[] blobBytes = getBlobBytes(blobKey);
-        List<EntityAnnotation> imageLabels = getImageLabels(blobBytes);
-
-        // Output some HTML that shows the data the user entered.
-        // A real codebase would probably store these in Datastore.
-        response.setContentType("text/html");
-        out.println("<p>Here's the image you uploaded:</p>");
-        out.println("<a href=\"" + imageUrl + "\">");
-        out.println("<img src=\"" + imageUrl + "\" />");
-        out.println("</a>");
-        out.println("<p>Here are the labels we extracted:</p>");
-        out.println("<ul>");
-        for(EntityAnnotation label : imageLabels){
-            out.println("<li>" + label.getDescription() + " " + label.getScore());
-        }
-        out.println("</ul>");
-    }
 
     /**
      * Returns the BlobKey that points to the file uploaded by the user, or null if the user didn't upload a file.
      */
-    private BlobKey getBlobKey(HttpServletRequest request, String formInputElementName){
+    public static BlobKey getBlobKey(HttpServletRequest request, String formInputElementName){
         BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
         Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
         List<BlobKey> blobKeys = blobs.get("image");
@@ -98,7 +58,7 @@ public class ImageAnalysisServlet extends HttpServlet {
      * Blobstore stores files as binary data. This function retrieves the
      * binary data stored at the BlobKey parameter.
      */
-    private byte[] getBlobBytes(BlobKey blobKey) throws IOException {
+    public static byte[] getBlobBytes(BlobKey blobKey) throws IOException {
         BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
         ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
 
@@ -126,7 +86,7 @@ public class ImageAnalysisServlet extends HttpServlet {
      * represented by the binary data stored in imgBytes.
      * @return
      */
-    private List<EntityAnnotation> getImageLabels(byte[] imgBytes) throws IOException {
+    public static List<EntityAnnotation> getImageLabels(byte[] imgBytes) throws IOException {
         ByteString byteString = ByteString.copyFrom(imgBytes);
         Image image = Image.newBuilder().setContent(byteString).build();
 
@@ -153,7 +113,7 @@ public class ImageAnalysisServlet extends HttpServlet {
     /**
      * Returns a URL that points to the uploaded file.
      */
-    private String getUploadedFileUrl(BlobKey blobKey){
+    public static String getUploadedFileUrl(BlobKey blobKey){
         ImagesService imagesService = ImagesServiceFactory.getImagesService();
         ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
         return imagesService.getServingUrl(options);

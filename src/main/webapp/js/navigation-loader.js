@@ -34,7 +34,6 @@ function addLoginOrLogoutLinkToNavigation() {
             navigationElement.appendChild(createListItem(createLink('stats.html', 'Stats')), false);
             navigationElement.appendChild(createListItem(createLink('map.html', 'Map')), false);
             navigationElement.appendChild(createListItem(createLink('feed.html', 'Message Feed')), false);
-            navigationElement.appendChild(createListItem(createLink('image.jsp', 'Image Analysis'), false));
 
             navigationElement.appendChild(createListItem(createLink('/logout', 'Logout'), true));
             navigationElement.appendChild(createListItem(createLink('/setting.html', 'Setting'), true));
