@@ -38,13 +38,17 @@ limitations under the License.
         <div class="jumbotron">
             <h1 id="page-title">User Setting</h1>
         </div>
+
         <div class="container-fluid">
+            <hr/>
+
             <div class="form-group">
                 <form id="setting-form" action="/setting" method="POST">
-                    <p>Displayed Name:</p>
-                    <textarea id="displayed-name-input" name="displayed-name" placeholder="Name that is displayed to everyone" class="form-control" required></textarea>
-                    <br/>
-                    <input type="submit" value="Submit" class="btn btn-primary">
+                    <div class="field-with-label">
+                        Displayed Name:
+                        <textarea id="displayed-name-input" placeholder="Name that is displayed to everyone" class="form-control" required></textarea>
+                    </div>
+                    <input type="submit" value="Update" class="btn btn-primary">
                 </form>
             </div>
             <script>buildUI();</script>
