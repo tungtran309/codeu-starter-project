@@ -16,6 +16,7 @@
 
 package com.google.codeu.servlets;
 
+import com.google.common.flogger.FluentLogger;
 import com.google.appengine.api.blobstore.*;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
@@ -39,7 +40,6 @@ import javax.servlet.http.HttpServletResponse;
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
 public class MessageServlet extends HttpServlet {
-
   private Datastore datastore;
 
   @Override
@@ -51,7 +51,6 @@ public class MessageServlet extends HttpServlet {
   /** Stores a new {@link Message}. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
     UserService userService = UserServiceFactory.getUserService();
     if (!userService.isUserLoggedIn()) {
       response.sendRedirect("/index.html");
@@ -85,9 +84,11 @@ public class MessageServlet extends HttpServlet {
     byte[] blobBytes = ImageAnalysisServlet.getBlobBytes(blobKey);
     List<EntityAnnotation> imageLabels = ImageAnalysisServlet.getImageLabels(blobBytes);
     StringBuilder prefix = new StringBuilder("\n");
+    prefix.append("<ul>");
     for(EntityAnnotation label : imageLabels){
-      prefix.append("<li>" + label.getDescription() + " " + label.getScore() + "\n");
+      prefix.append("<li>" + label.getDescription() + " " + label.getScore() + "\n" + "</li>");
     }
+    prefix.append("</ul>");
 
     // User submitted form without selecting a file, so we can't get a URL. (live server)
     BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);

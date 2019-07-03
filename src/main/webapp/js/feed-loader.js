@@ -35,7 +35,7 @@ function buildMessageDiv(message) {
  
     const bodyDiv = document.createElement('div');
     bodyDiv.classList.add('message-body');
-    bodyDiv.appendChild(document.createTextNode(message.text));
+    $(message.text).appendTo(bodyDiv);
  
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message-div');
