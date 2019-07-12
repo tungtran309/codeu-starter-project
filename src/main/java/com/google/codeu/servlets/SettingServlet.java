@@ -62,9 +62,10 @@ public class SettingServlet extends HttpServlet {
 
         String userEmail = userService.getCurrentUser().getEmail();
         String aboutMe = datastore.getUser(userEmail).getAboutMe();
+        String avatarUrl = datastore.getUser(userEmail).getAvatarUrl();
         String displayedName = Jsoup.clean(request.getParameter("displayed-name"), Whitelist.none());
 
-        User user = new User(userEmail, aboutMe, displayedName);
+        User user = new User(userEmail, aboutMe, displayedName, avatarUrl);
         datastore.storeUser(user);
 
         response.sendRedirect("/setting.html");

@@ -36,7 +36,7 @@ function addLoginOrLogoutLinkToNavigation() {
 
         if (loginStatus.isLoggedIn) {
           navigationElement.appendChild(createListItem(createLink('/logout', 'Logout'), true));
-          navigationElement.appendChild(createListItem(createLink('/setting.html', 'Setting'), true));
+          navigationElement.appendChild(createListItem(createLink('/setting.html', 'Settings'), true));
           navigationElement.appendChild(createListItem(createLink('/users/' + loginStatus.username, 'Your Page'), true));
         } else {
           navigationElement.appendChild(

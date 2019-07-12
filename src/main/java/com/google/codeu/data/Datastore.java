@@ -49,6 +49,7 @@ public class Datastore {
     userEntity.setProperty("email", user.getEmail());
     userEntity.setProperty("aboutMe", user.getAboutMe());
     userEntity.setProperty("displayedName", user.getDisplayedName());
+    userEntity.setProperty("avatarUrl", user.getAvatarUrl());
     datastore.put(userEntity);
   }
 
@@ -68,9 +69,9 @@ public class Datastore {
 
     String aboutMe = (String) userEntity.getProperty("aboutMe");
     String displayedName = (String) userEntity.getProperty("displayedName");
-    User user = new User(email, aboutMe, displayedName);
+    String avatarUrl = (String) userEntity.getProperty("avatarUrl");
 
-    return user;
+    return new User(email, aboutMe, displayedName, avatarUrl);
   }
 
   /** Stores the Message in Datastore. */
