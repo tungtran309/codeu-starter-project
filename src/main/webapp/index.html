@@ -22,6 +22,7 @@ limitations under the License.
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
+        <link href="css/index.css" rel="stylesheet">
         <script src="/js/navigation-loader.js??v=AUTO_INCREMENT_VERSION"></script>
     </head>
     <body>
@@ -32,15 +33,24 @@ limitations under the License.
                 <script>addLoginOrLogoutLinkToNavigation();</script>
             </ul>
         </nav>
-        <div class="jumbotron">
-            <h1 class="page-header">Memes Project</h1>
+        <div id="picInTheMiddle">
+            <img src="images/logo.jpg" alt="project logo">
         </div>
         <div class="container-fluid">
-            <p>This is Team 46's CodeU Summer 2019 project! (We have not come with a name yet, but hopefully soon :P )</p>
-            <p>It is a social network of memes, which can help you to relax after a hard-working day.</p>
-            <p>To explore more, please click on the navigation bar above ♥ </p>
+            <div class="container-fluid">
+                <h2 class="font-weight-bolder">Introduction</h2>
+                <p id="para">This is Meme First Search Team's project.
+                It is a social network of memes, which can help you to relax after a hard-working day.</p>
+            </div>
+            <div class="container-fluid">
+                <h3 class="font-weight-bolder">Why we created this meme project?</h3>
+                <p id="para">We all admired a famous meme social network in Vietnam: haivl.com, that we decided to make a
+                web app about meme in less than a minute.</p>
+            </div>
+            <div class="container-fluid">
+                <h4 class="font-weight-bold">To explore more, please click on the navigation bar above ♥ </h4>
+            </div>
         </div>
-
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/bootstrap.js"></script>
     </body>
