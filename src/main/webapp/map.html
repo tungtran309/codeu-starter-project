@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Map of Vietnam</title>
+        <title>Map</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
@@ -19,17 +19,38 @@
                 <script>addLoginOrLogoutLinkToNavigation();</script>
             </ul>
         </nav>
-        <div class="jumbotron">
+        <div class="jumbotron" style="padding-bottom: 0">
             <h1>A Map To Explore</h1>
         </div>
         <div class="container-fluid">
-            <p>You can click on a random marker on the Map to go to that random user's page.</p>
+            <p>You can click on a random marker on the Map to go to that random user's page.
+            Also, please share your location so other user can see your page too.</p>
             <br>
+            <input type="submit" value="Share Location" class="btn btn-primary" id="location-button">
+            <br><br><br>
             <div id="map">
                 <script>createMap();</script>
             </div>
         </div>
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/bootstrap.js"></script>
+        <script>
+            fetch('/login-status')
+                .then((response) => {
+                    return response.json();
+                })
+                .then((loginStatus) => {
+                    if (loginStatus.isLoggedIn) {
+                        $('#location-button').click(function () {
+                            if (navigator.geolocation)
+                                navigator.geolocation.getCurrentPosition(function (position) {
+                                    postMarker(position.coords.latitude, position.coords.longitude, loginStatus.username);
+                                });
+                            else
+                                console.log("geolocation not supported");
+                        });
+                    }
+                });
+        </script>
     </body>
 </html>
