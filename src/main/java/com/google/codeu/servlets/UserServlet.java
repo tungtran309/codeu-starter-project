@@ -48,14 +48,14 @@ public class UserServlet extends HttpServlet {
 
         String requestUrl = request.getRequestURI();
 
-        String userEmail = requestUrl.substring("/users/".length());
-        User user = datastore.getUser(userEmail);
+        String urlUserEmail = requestUrl.substring("/users/".length());
+        User user = datastore.getUser(urlUserEmail);
 
         String loggedInUserEmail = getLoggedInUserEmail();
 
         if (user != null) {// Confirm that user is valid
             // Fetch user messages
-            List<Message> messages = datastore.getMessages(userEmail);
+            List<Message> messages = datastore.getMessages(urlUserEmail);
             List<Message> messageWithImage = new ArrayList<>();
             messages.forEach(message -> {
                 Message replacedMessage = new Message(message.getUser(), ImageReplacement(message.getText()));
@@ -73,26 +73,26 @@ public class UserServlet extends HttpServlet {
             // Fetch username
             String displayedName = user.getDisplayedName();
             if (displayedName == null || displayedName.equals(""))
-                displayedName = userEmail;
+                displayedName = urlUserEmail;
 
             // Fetch avatar url
             String avatarUrl = user.getAvatarUrl();
 
             // Add them to the request
             request.setAttribute("loggedInUserEmail", loggedInUserEmail);
-            request.setAttribute("userEmail", userEmail);
+            request.setAttribute("urlUserEmail", urlUserEmail);
             request.setAttribute("messages", messageWithImage);
             request.setAttribute("about",
                     aboutUser.equals("") ? "This user has not entered any information yet." : aboutUser);
             request.setAttribute("displayedName", displayedName);
             request.setAttribute("avatarUrl", avatarUrl == null ? "" : avatarUrl);
-        } else if (loggedInUserEmail.equals(userEmail)) { // If new user logged in
-            datastore.storeUser(new User(userEmail, "", "", ""));
+        } else if (loggedInUserEmail.equals(urlUserEmail)) { // If new user logged in
+            datastore.storeUser(new User(urlUserEmail, "", "", ""));
             request.setAttribute("loggedInUserEmail", loggedInUserEmail);
-            request.setAttribute("userEmail", userEmail);
+            request.setAttribute("urlUserEmail", urlUserEmail);
             request.setAttribute("messages", new ArrayList<>());
             request.setAttribute("about", "This user has not entered any information yet.");
-            request.setAttribute("displayedName", userEmail);
+            request.setAttribute("displayedName", urlUserEmail);
             request.setAttribute("avatarUrl", "");
         } else { // Someone entered a user that does not exist in the database
             response.sendRedirect("/index.html");
