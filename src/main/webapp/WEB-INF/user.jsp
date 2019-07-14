@@ -22,6 +22,7 @@ limitations under the License.
 <%@ page import="com.google.common.flogger.FluentLogger" %>
 <% BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     String uploadUrl = blobstoreService.createUploadUrl("/messages");
+    String avatarUploadUrl = blobstoreService.createUploadUrl("/avatar");
     List<Message> messages = (List<Message>) request.getAttribute("messages"); %>
 
 <!DOCTYPE html>
@@ -45,56 +46,82 @@ limitations under the License.
                 <li><a href="${pageContext.request.contextPath}/feed.html">Message Feed</a></li>
 
                 <li class="right"><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
-                <li class="right"><a href="${pageContext.request.contextPath}/setting.html">Setting</a></li>
+                <li class="right"><a href="${pageContext.request.contextPath}/setting.html">Settings</a></li>
                 <li class="right"><a href="${pageContext.request.contextPath}/users/<%=request.getAttribute("user")%>">Your Page</a></li>
             </ul>
         </nav>
-        <div class="jumbotron text-center">
-            <h1 id="page-title"><%=request.getAttribute("displayedName")%></h1>
-        </div>
-        <div id="about-me-container" class="form-group text-center">
-            <%=request.getAttribute("about")%>
-        </div>
 
-        <div class="container-fluid">
-            <hr/>
+        <div id="container">
 
-            <div class="form-group">
-                <form id="about-me-form" action="/about" method="POST">
-                    <textarea id="about-me-input" name="about-me" placeholder="Enter new 'About me' text" class="form-control" rows=4
-                              required></textarea>
-                    <br/>
-                    <input type="submit" value="Update" class="btn btn-primary">
-                </form>
-            </div>
+            <div class="row">
+                <div class="col-3" id="user-information-layout">
+                    <div class="card border" style="padding: 5px; margin: 10px">
 
-            <hr/>
+                        <img class="card-img-top" src="<%=
+                            (request.getAttribute("avatarUrl") == "")?
+                                "/images/avatar-placeholder.gif" :
+                                request.getAttribute("avatarUrl")
+                            %>"
+                             alt="Avatar">
 
-            <div class="form-group">
-                <form id="message-form" action="<%= uploadUrl %>" method="POST" enctype="multipart/form-data">
-                    <textarea name="text" id="message-input" class="form-control"></textarea>
-                    <br/>
-                    Upload meme:
-                    <input type="file" name="image" style="margin-left: 15px"/>
-                    <br/>
-                    <br/>
-                    <input type="submit" value="Upload" class="btn btn-primary">
-                    <script>
-                        const config = {removePlugins: ['ImageUpload'], placeholder: 'Meme title/description'};
-                        ClassicEditor.create(document.getElementById('message-input'), config)
-                    </script>
-                </form>
-            </div>
+                        <div class="card-body">
 
-            <hr/>
+                            <h4 id="page-title" class="text-center">
+                                <%=request.getAttribute("displayedName")%>
+                            </h4>
 
-            <div id="message-container">
-                <%
-                    if (messages.size() == 0) {
-                        %>This user has no posts yet<%
-                    } else {
-                        for (Message message : messages) {
-                        %>
+                            <hr/>
+
+                            <p> <%=request.getAttribute("about")%> </p>
+
+                        </div>
+
+                    </div>
+
+                    <form style="margin-left: 15px" method="POST" action="<%= avatarUploadUrl %>" enctype="multipart/form-data">
+                         Upload avatar: <input type="file" name="avatar" size="60" />
+                        <br/>
+                        <br/>
+                        <input type="submit" value="Set Avatar" class="btn btn-primary" />
+                    </form>
+
+                    <div class="form-group" style="margin: 15px">
+                        <form id="about-me-form" action="/about" method="POST">
+                            <textarea id="about-me-input" name="about-me" placeholder="Tell something about yourself" class="form-control" rows=4 required></textarea>
+                            <br/>
+                            <input type="submit" value="Update" class="btn btn-primary">
+                        </form>
+                    </div>
+
+                </div>
+
+                <div class="col-9" id="meme-list-layout" style="padding-right: 50px">
+
+                        <div class="form-group">
+                            <form style="margin-top: 10px" id="message-form" action="<%= uploadUrl %>" method="POST" enctype="multipart/form-data">
+                                <textarea name="text" id="message-input" class="form-control"></textarea>
+                                <br/>
+                                Upload meme:
+                                <input type="file" name="image" style="margin-left: 15px"/>
+                                <br/>
+                                <br/>
+                                <input type="submit" value="Upload" class="btn btn-primary">
+                                <script>
+                                    const config = {removePlugins: ['ImageUpload'], placeholder: 'Meme title/description'};
+                                    ClassicEditor.create(document.getElementById('message-input'), config)
+                                </script>
+                            </form>
+                        </div>
+
+                        <hr/>
+
+                        <div id="message-container">
+                            <%
+                                if (messages.size() == 0) {
+                                    %>This user has no posts yet<%
+                                } else {
+                                    for (Message message : messages) {
+                                    %>
                             <div class="message-div">
                                 <div class="message-header"><%=message.getUser()%> - <%= new Date(message.getTimestamp())%>
                                 </div>
@@ -102,10 +129,15 @@ limitations under the License.
                                 </div>
                             </div>
                             <%
-                        }
-                    }
-                %>
+                                    }
+                                }
+                            %>
+                        </div>
+
+                </div>
+
             </div>
+
         </div>
 
         <script src="js/jquery-3.4.1.min.js"></script>

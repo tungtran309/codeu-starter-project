@@ -55,9 +55,13 @@ public class UserServlet extends HttpServlet {
                 aboutUser = userData.getAboutMe();
             }
 
+            // Fetch username
             String displayedName = userData.getDisplayedName();
             if (displayedName == null || displayedName.equals(""))
                 displayedName = user;
+
+            // Fetch avatar url
+            String avatarUrl = userData.getAvatarUrl();
 
             // Add them to the request
             request.setAttribute("messages", messageWithImage);
@@ -65,12 +69,14 @@ public class UserServlet extends HttpServlet {
                     aboutUser.equals("") ? "This user has not entered any information yet." : aboutUser);
             request.setAttribute("user", user);
             request.setAttribute("displayedName", displayedName);
+            request.setAttribute("avatarUrl", avatarUrl == null ? "" : avatarUrl);
         } else { // If new user logged in
-            datastore.storeUser(new User(user, "", ""));
+            datastore.storeUser(new User(user, "", "", ""));
             request.setAttribute("user", user);
             request.setAttribute("messages", new ArrayList<>());
             request.setAttribute("about", "This user has not entered any information yet.");
             request.setAttribute("displayedName", user);
+            request.setAttribute("avatarUrl", "");
         }
 
         request.getRequestDispatcher("/WEB-INF/user.jsp").forward(request,response);

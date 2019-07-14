@@ -17,7 +17,7 @@ limitations under the License.
 <!DOCTYPE html>
 <html>
     <head>
-        <title>User Setting</title>
+        <title>User Settings</title>
         <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
         <link href="css/bootstrap.css" rel="stylesheet">
@@ -36,7 +36,7 @@ limitations under the License.
             </ul>
         </nav>
         <div class="jumbotron">
-            <h1 id="page-title">User Setting</h1>
+            <h1 id="page-title">User Settings</h1>
         </div>
 
         <div class="container-fluid">
@@ -45,7 +45,7 @@ limitations under the License.
             <div class="form-group">
                 <form id="setting-form" action="/setting" method="POST">
                     <p>Displayed Name:</p>
-                    <textarea id="displayed-name-input" placeholder="Name that is displayed to everyone" class="form-control" required></textarea>
+                    <textarea id="displayed-name-input" name="displayed-name" placeholder="Name that is displayed to everyone" class="form-control" required></textarea>
                     <br/>
                     <input type="submit" value="Update" class="btn btn-primary">
                 </form>

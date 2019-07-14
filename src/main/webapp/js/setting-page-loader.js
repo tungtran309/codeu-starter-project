@@ -38,9 +38,9 @@ function fetchDisplayedName(){
         .then((response) => {
             return response.json();
         })
-        .then((userSetting) => {
+        .then((userSettings) => {
             const displayedNameInput = document.getElementById('displayed-name-input');
-            displayedNameInput.innerHTML = userSetting.displayedName;
+            displayedNameInput.innerHTML = userSettings.displayedName;
         });
 }
 
