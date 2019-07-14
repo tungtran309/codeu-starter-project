@@ -33,7 +33,6 @@ limitations under the License.
         <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/css/user-page.css" rel="stylesheet">
-        <script src="${pageContext.request.contextPath}/js/map-loader.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/12.2.0/classic/ckeditor.js"></script>
     </head>
     <body>
@@ -111,23 +110,5 @@ limitations under the License.
 
         <script src="js/jquery-3.4.1.min.js"></script>
         <script src="js/bootstrap.js"></script>
-        <script>
-            fetch('/login-status')
-                .then((response) => {
-                    return response.json();
-                })
-                .then((loginStatus) => {
-                    if (loginStatus.isLoggedIn && loginStatus.username == parameterUsername) {
-                        $.ajax({
-                            url: "https://geoip-db.com/jsonp",
-                            jsonpCallback: "callback",
-                            dataType: "jsonp",
-                            success: function( location ) {
-                                postMarker(location.latitude, location.longitude, loginStatus.username);
-                            }
-                        });
-                    }
-                });
-        </script>
     </body>
 </html>
