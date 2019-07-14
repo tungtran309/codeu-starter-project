@@ -28,7 +28,7 @@ limitations under the License.
 <!DOCTYPE html>
 <html>
     <head>
-        <title><%=request.getAttribute("user")%></title>
+        <title><%=request.getAttribute("userEmail")%></title>
         <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
@@ -47,7 +47,7 @@ limitations under the License.
 
                 <li class="right"><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
                 <li class="right"><a href="${pageContext.request.contextPath}/setting.html">Settings</a></li>
-                <li class="right"><a href="${pageContext.request.contextPath}/users/<%=request.getAttribute("user")%>">Your Page</a></li>
+                <li class="right"><a href="${pageContext.request.contextPath}/users/<%=request.getAttribute("userEmail")%>">Your Page</a></li>
             </ul>
         </nav>
 
