@@ -21,7 +21,7 @@ limitations under the License.
 <%@ page import="java.util.Date" %>
 <%@ page import="com.google.common.flogger.FluentLogger" %>
 <% BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-    String uploadUrl = blobstoreService.createUploadUrl("/messages");
+    String memeUploadUrl = blobstoreService.createUploadUrl("/messages");
     String avatarUploadUrl = blobstoreService.createUploadUrl("/avatar");
     List<Message> messages = (List<Message>) request.getAttribute("messages");
 
@@ -106,7 +106,7 @@ limitations under the License.
 
                 <div class="col-9" id="meme-list-layout" style="padding-right: 50px">
                     <div class="form-group <%=visibilityTag%>">
-                        <form style="margin-top: 10px" id="message-form" action="<%= uploadUrl %>" method="POST" enctype="multipart/form-data">
+                        <form style="margin-top: 10px" id="message-form" action="<%= memeUploadUrl %>" method="POST" enctype="multipart/form-data">
                             <textarea name="text" id="message-input" class="form-control"></textarea>
                             <br/>
                             Upload meme:
