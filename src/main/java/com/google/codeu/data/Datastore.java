@@ -77,7 +77,7 @@ public class Datastore {
   /** Stores the Message in Datastore. */
   public void storeMessage(Message message) {
     Entity messageEntity = new Entity("Message", message.getId().toString());
-    messageEntity.setProperty("user", message.getUser());
+    messageEntity.setProperty("user", message.getUser().getEmail());
     // styled text part 1 here. Temporary remove it
     /*Parser parser = Parser.builder().build();
     Node document = parser.parse(message.getText());
@@ -152,7 +152,7 @@ public class Datastore {
       try {
         String idString = entity.getKey().getName();
         UUID id = UUID.fromString(idString);
-        String user = (String) entity.getProperty("user");
+        User user = getUser((String) entity.getProperty("user"));
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
 

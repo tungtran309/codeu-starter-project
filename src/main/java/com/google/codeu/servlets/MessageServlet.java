@@ -16,6 +16,7 @@
 
 package com.google.codeu.servlets;
 
+import com.google.codeu.data.User;
 import com.google.common.flogger.FluentLogger;
 import com.google.appengine.api.blobstore.*;
 import com.google.appengine.api.images.ImagesService;
@@ -57,13 +58,13 @@ public class MessageServlet extends HttpServlet {
       return;
     }
 
-    String user = userService.getCurrentUser().getEmail();
+    User user = datastore.getUser(userService.getCurrentUser().getEmail());
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.basic());
 
     Message message = new Message(user, text + '\n' + getUploadedFileUrlToImageSource(request, "image"));
     datastore.storeMessage(message);
 
-    response.sendRedirect("/users/" + user);
+    response.sendRedirect("/users/" + user.getEmail());
   }
 
   /**
