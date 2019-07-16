@@ -19,17 +19,31 @@ function fetchMessages() {
     })
 }
 
+
+function buildDateString(date) {
+    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+}
+
 function buildMessageDiv(message) {
-    const usernameDiv = document.createElement('div');
-    usernameDiv.classList.add("left-align");
-    usernameDiv.appendChild(document.createTextNode(message.user));
+    var usernameDiv = document.createElement('a');
+    usernameDiv.classList.add("top-align");
+    usernameDiv.appendChild(document.createTextNode(message.user.email));
+    usernameDiv.title = message.user.email;
+    usernameDiv.href = 'users/' + message.user.email;
+    var avatar = document.createElement("img");
+    avatar.setAttribute('src', message.user.avatarUrl);
+    avatar.setAttribute('alt', 'na');
+    avatar.setAttribute('height', '40px');
+    avatar.setAttribute('width', '40px');
  
     const timeDiv = document.createElement('div');
-    timeDiv.classList.add('right-align');
-    timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
+    timeDiv.classList.add('top-align');
+    timeDiv.appendChild(document.createTextNode(buildDateString(new Date(message.timestamp))));
  
     const headerDiv = document.createElement('div');
     headerDiv.classList.add('message-header');
+    headerDiv.appendChild(avatar);
+    headerDiv.appendChild(document.createElement('br'));
     headerDiv.appendChild(usernameDiv);
     headerDiv.appendChild(timeDiv);
  
