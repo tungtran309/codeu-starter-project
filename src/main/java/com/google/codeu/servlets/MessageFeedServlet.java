@@ -1,9 +1,9 @@
 package com.google.codeu.servlets;
 
-import com.google.api.client.json.Json;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
-import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,17 +26,37 @@ public class MessageFeedServlet extends HttpServlet {
         datastore = new Datastore();
     }
 
+    private String getLoggedInUserEmail() {
+        UserService userService = UserServiceFactory.getUserService();
+
+        String loggedInUserEmail;
+        if (userService.isUserLoggedIn()) {
+            loggedInUserEmail = userService.getCurrentUser().getEmail();
+        } else {
+            loggedInUserEmail = "";
+        }
+
+        return loggedInUserEmail;
+    }
+
     /**
      * Responds with a JSON representation of Message data for all users.
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
+
+        String loggedInUserEmail = getLoggedInUserEmail();
 
         List<Message> messages = datastore.getAllMessages();
-        Gson gson = new Gson();
-        String json = gson.toJson(messages);
+        List<Message> messagesWithImage = new ArrayList<>();
+        messages.forEach(message -> {
+            Message replacedMessage = new Message(message.getUser(), UserServlet.ImageReplacement(message.getText()));
+            messagesWithImage.add(replacedMessage);
+        });
 
-        response.getOutputStream().println(json);
+        request.setAttribute("messages", messagesWithImage);
+        request.setAttribute("loggedInUserEmail", loggedInUserEmail);
+
+        request.getRequestDispatcher("/WEB-INF/feed.jsp").forward(request,response);
     }
 }

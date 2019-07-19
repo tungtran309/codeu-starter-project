@@ -1,0 +1,10 @@
+.border-grey {
+    border: thin solid darkgray;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+#meme-content {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
