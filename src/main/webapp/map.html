@@ -40,16 +40,22 @@
                     return response.json();
                 })
                 .then((loginStatus) => {
-                    if (loginStatus.isLoggedIn) {
-                        $('#location-button').click(function () {
-                            if (navigator.geolocation)
+                    $('#location-button').click(function () {
+                        if (loginStatus.isLoggedIn) {
+                            if (navigator.geolocation) {
                                 navigator.geolocation.getCurrentPosition(function (position) {
                                     postMarker(position.coords.latitude, position.coords.longitude, loginStatus.username);
+                                    createMarkerForDisplay(position.coords.latitude, position.coords.longitude, loginStatus.username);
                                 });
-                            else
-                                console.log("geolocation not supported");
-                        });
-                    }
+                            }
+                            else{
+                                alert("Geolocation is not supported on your device.");
+                            }
+                        }
+                        else{
+                            alert("Please log in to share your location.");
+                        }
+                    });
                 });
         </script>
     </body>

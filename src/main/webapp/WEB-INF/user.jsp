@@ -58,7 +58,7 @@ limitations under the License.
             </ul>
         </nav>
 
-        <div id="container">
+        <div class="container-fluid">
 
             <div class="row">
                 <div class="col-3" id="user-information-layout">
@@ -104,7 +104,7 @@ limitations under the License.
 
                 </div>
 
-                <div class="col-9" id="meme-list-layout" style="padding-right: 50px">
+                <div class="col-9" id="meme-list-layout">
                     <div class="form-group <%=visibilityTag%>">
                         <form style="margin-top: 10px" id="message-form" action="<%= memeUploadUrl %>" method="POST" enctype="multipart/form-data">
                             <textarea name="text" id="message-input" class="form-control"></textarea>
