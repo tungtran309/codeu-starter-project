@@ -27,22 +27,22 @@ function addLoginOrLogoutLinkToNavigation() {
 
   fetch('/login-status')
       .then((response) => {
-          return response.json();
-      })
-      .then((loginStatus) => {
-        navigationElement.appendChild(createListItem(createLink('stats.html', 'Stats')), false);
-        navigationElement.appendChild(createListItem(createLink('map.html', 'Map')), false);
-        navigationElement.appendChild(createListItem(createLink('feed.html', 'Message Feed')), false);
+    return response.json();
+})
+.then((loginStatus) => {
+    navigationElement.appendChild(createListItem(createLink('stats.html', 'Stats')), false);
+  navigationElement.appendChild(createListItem(createLink('map.html', 'Map')), false);
+  navigationElement.appendChild(createListItem(createLink('/feed', 'Message Feed')), false);
 
-        if (loginStatus.isLoggedIn) {
-          navigationElement.appendChild(createListItem(createLink('/logout', 'Logout'), true));
-          navigationElement.appendChild(createListItem(createLink('/setting.html', 'Settings'), true));
-          navigationElement.appendChild(createListItem(createLink('/users/' + loginStatus.username, 'Your Page'), true));
-        } else {
-          navigationElement.appendChild(
-              createListItem(createLink('/login', 'Login'), true));
-        }
-      });
+  if (loginStatus.isLoggedIn) {
+    navigationElement.appendChild(createListItem(createLink('/logout', 'Logout'), true));
+    navigationElement.appendChild(createListItem(createLink('/setting.html', 'Settings'), true));
+    navigationElement.appendChild(createListItem(createLink('/users/' + loginStatus.username, 'Your Page'), true));
+  } else {
+    navigationElement.appendChild(
+        createListItem(createLink('/login', 'Login'), true));
+  }
+});
 }
 
 /**

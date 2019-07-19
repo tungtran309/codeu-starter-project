@@ -29,7 +29,7 @@ public class UserServlet extends HttpServlet {
         datastore = new Datastore();
     }
 
-    public String getLoggedInUserEmail() {
+    private String getLoggedInUserEmail() {
         UserService userService = UserServiceFactory.getUserService();
 
         String loggedInUserEmail;
@@ -105,7 +105,7 @@ public class UserServlet extends HttpServlet {
     /**
      * Return correct form of image for message
      */
-    private String ImageReplacement(String rawMessage) {
+    static String ImageReplacement(String rawMessage) {
         String regex = "(https?://\\S+\\.(png|jpg))";
         String replacement = "<img src=\"$1\" />";
 
