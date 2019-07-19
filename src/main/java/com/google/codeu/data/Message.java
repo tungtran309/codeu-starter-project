@@ -22,7 +22,7 @@ import java.util.UUID;
 public class Message {
 
   private UUID id;
-  private String user;
+  private User user;
   private String text;
   private long timestamp;
 
@@ -30,11 +30,11 @@ public class Message {
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
    */
-  public Message(String user, String text) {
+  public Message(User user, String text) {
     this(UUID.randomUUID(), user, text, System.currentTimeMillis());
   }
 
-  public Message(UUID id, String user, String text, long timestamp) {
+  public Message(UUID id, User user, String text, long timestamp) {
     this.id = id;
     this.user = user;
     this.text = text;
@@ -45,7 +45,7 @@ public class Message {
     return id;
   }
 
-  public String getUser() {
+  public User getUser() {
     return user;
   }
 
