@@ -16,14 +16,10 @@
 
 package com.google.codeu.data;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.common.flogger.FluentLogger;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -77,6 +73,7 @@ public class Datastore {
   /** Stores the Message in Datastore. */
   public void storeMessage(Message message) {
     Entity messageEntity = new Entity("Message", message.getId().toString());
+
     messageEntity.setProperty("user", message.getUser().getEmail());
     // styled text part 1 here. Temporary remove it
     /*Parser parser = Parser.builder().build();
@@ -114,10 +111,12 @@ public class Datastore {
    *
    * @return a message of that id, or null if no message with that id was found.
    */
-  public Message getMessage(UUID id) {
+  public Message getMessage(String id) {
+    Key messageKey = KeyFactory.createKey("Message", id);
+
     Query query =
             new Query("Message")
-                    .setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, id));
+                    .setFilter(new Query.FilterPredicate("__key__", FilterOperator.EQUAL, messageKey));
 
     List<Message> messages = getMessagesFromQuery(query);
     return messages.isEmpty() ? null : messages.get(0);
@@ -126,11 +125,13 @@ public class Datastore {
   /**
    * Deletes message with a specific id, or do nothing if message not found.
    */
-  public void deleteMessage(UUID id) {
+  public void deleteMessage(String id) {
+    Key messageKey = KeyFactory.createKey("Message", id);
+
     Query query =
             new Query("Message")
                     .setKeysOnly()
-                    .setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, id));
+                    .setFilter(new Query.FilterPredicate("__key__", FilterOperator.EQUAL, messageKey));
 
     PreparedQuery result = datastore.prepare(query);
 
@@ -163,8 +164,8 @@ public class Datastore {
    */
   public List<Message> getAllMessages() {
     Query query =
-            new Query("Message")
-                    .addSort("timestamp", SortDirection.DESCENDING);
+        new Query("Message")
+            .addSort("timestamp", SortDirection.DESCENDING);
 
     return getMessagesFromQuery(query);
   }
@@ -182,6 +183,7 @@ public class Datastore {
     for (Entity entity : results.asIterable()) {
       try {
         String idString = entity.getKey().getName();
+
         UUID id = UUID.fromString(idString);
         User user = getUser((String) entity.getProperty("user"));
         String text = (String) entity.getProperty("text");

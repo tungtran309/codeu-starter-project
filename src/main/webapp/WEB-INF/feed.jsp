@@ -92,13 +92,13 @@
 
                             <p style="text-align: center"> <%= dateString %> </p>
 
-                            <%
-                                logger.atInfo().log("message.getId().toString(): %s", message.getId().toString());
-                                if (message.getUser().getEmail().equals(loggedInUserEmail)) { %>
-                                    <form method="POST" action="/delete-message">
-                                        <input type="text" name="message-id" value="<%=message.getId().toString()%>">
-                                        <input type="submit" value="Delete" class="btn btn-primary" />
-                                    </form>
+                            <% if (message.getUser().getEmail().equals(loggedInUserEmail)) { %>
+                            <div>
+                                <form method="POST" action="/delete-message">
+                                    <input type="hidden" name="id" value="<%=message.getId().toString()%>" />
+                                    <input type="submit" value="Delete" class="btn btn-primary"/>
+                                </form>
+                            </div>
                             <% } %>
                         </div>
 
