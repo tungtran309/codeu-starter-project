@@ -110,6 +110,37 @@ public class Datastore {
   }
 
   /**
+   * Gets message with a specific id.
+   *
+   * @return a message of that id, or null if no message with that id was found.
+   */
+  public Message getMessage(UUID id) {
+    Query query =
+            new Query("Message")
+                    .setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, id));
+
+    List<Message> messages = getMessagesFromQuery(query);
+    return messages.isEmpty() ? null : messages.get(0);
+  }
+
+  /**
+   * Deletes message with a specific id, or do nothing if message not found.
+   */
+  public void deleteMessage(UUID id) {
+    Query query =
+            new Query("Message")
+                    .setKeysOnly()
+                    .setFilter(new Query.FilterPredicate("id", FilterOperator.EQUAL, id));
+
+    PreparedQuery result = datastore.prepare(query);
+
+    for (Entity en : result.asIterable()) {
+      // delete each entity
+      datastore.delete(en.getKey());
+    }
+  }
+
+  /**
    * Gets messages posted by a specific user.
    *
    * @return a list of messages posted by the user, or empty list if user has never posted a
