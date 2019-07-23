@@ -17,7 +17,6 @@
 package com.google.codeu.servlets;
 
 import com.google.codeu.data.User;
-import com.google.common.flogger.FluentLogger;
 import com.google.appengine.api.blobstore.*;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;

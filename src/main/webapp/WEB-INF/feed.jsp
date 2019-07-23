@@ -11,8 +11,6 @@
 
     List<Message> messages = (List<Message>) request.getAttribute("messages");
     String loggedInUserEmail = (String)request.getAttribute("loggedInUserEmail");
-
-    FluentLogger logger = FluentLogger.forEnclosingClass();
 %>
 <!DOCTYPE html>
 <html>
