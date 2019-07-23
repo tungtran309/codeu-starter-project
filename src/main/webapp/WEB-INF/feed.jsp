@@ -68,7 +68,7 @@
         } else {
             for (Message message : messages) {
                 Date date = new Date(message.getTimestamp());
-                String dateString = date.getDay() + "/" + (date.getMonth()+1) + "/" + (date.getYear() + 1900) + " - " + date.getHours() + ":" + date.getMinutes();
+                String dateString = date.getDate() + "/" + (date.getMonth()+1) + "/" + (date.getYear() + 1900) + "\n" + date.getHours() + ":" + date.getMinutes();
         %>
             <div class="row border-grey">
                 <div class="col-2" style="border-right: solid thin darkgray">
@@ -83,8 +83,10 @@
                         <div class="card-body">
 
                             <h4 id="page-title" class="text-center">
-                                <%=message.getUser().getDisplayedName().equals("")?
-                                        message.getUser().getEmail() : message.getUser().getDisplayedName()%>
+                                <a href=<%="/users/" + message.getUser().getEmail()%>>
+                                    <%=message.getUser().getDisplayedName().equals("")?
+                                            message.getUser().getEmail() : message.getUser().getDisplayedName()%>
+                                </a>
                             </h4>
 
                             <hr/>

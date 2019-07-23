@@ -126,22 +126,45 @@ limitations under the License.
 
             <div id="message-container">
                 <%
-                    if (messages.size() == 0) {
+            if (messages.size() == 0) {
                 %>This user has no posts yet<%
             } else {
                 for (Message message : messages) {
-            %>
-                <div class="message-div">
-                    <div class="message-header"><%=message.getUser().getDisplayedName().equals("")?
-                            message.getUser().getEmail() : message.getUser().getDisplayedName()%> - <%= (new Date(message.getTimestamp())).toString()%>
-                    </div>
-                    <div class="message-body"><%=message.getText()%>
-                    </div>
-                </div>
-                <%
-                        }
+                    Date date = new Date(message.getTimestamp());
+                    String dateString = date.getDate() + "/" + (date.getMonth()+1) + "/" + (date.getYear() + 1900) + "\n" + date.getHours() + ":" + date.getMinutes();
+                        %>
+                        <div class="row border-grey">
+                            <div class="col-2" style="border-right: solid thin darkgray">
+                                <div class="card border" style="padding: 5px; margin: 10px;">
+
+                                    <img class="card-img-top" src="<%=
+                                        message.getUser().getAvatarUrl()
+                                    %>"
+                                         width="90%"
+                                         alt="Avatar">
+
+                                    <div class="card-body">
+
+                                        <h6 id="page-title" class="text-center">
+                                            <%=message.getUser().getDisplayedName().equals("")?
+                                                    message.getUser().getEmail() : message.getUser().getDisplayedName()%>
+                                        </h6>
+
+                                        <hr/>
+
+                                        <p style="text-align: center"><font size="1"> <%= dateString %> </font> </p>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div id="meme-content" class="col-10"><%=message.getText()%>
+                            </div>
+                        </div>
+                        <%
                     }
-                %>
+            }
+            %>
             </div>
         </div>
 
