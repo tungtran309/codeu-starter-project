@@ -36,6 +36,8 @@ import java.util.Set;
 /** Provides access to the data stored in Datastore. */
 public class Datastore {
 
+  public static final String KIND_USER = "User";
+  public static final String KIND_MESSAGE = "Message";
   private DatastoreService datastore;
 
   public Datastore() {
@@ -44,7 +46,7 @@ public class Datastore {
 
   /** Stores the User in Datastore. */
   public void storeUser(User user) {
-    Entity userEntity = new Entity("User", user.getEmail());
+    Entity userEntity = new Entity(KIND_USER, user.getEmail());
     userEntity.setProperty("email", user.getEmail());
     userEntity.setProperty("aboutMe", user.getAboutMe());
     userEntity.setProperty("displayedName", user.getDisplayedName());
@@ -57,7 +59,7 @@ public class Datastore {
    * null if no matching User was found.
    */
   public User getUser(String email) {
-    Query query = new Query("User")
+    Query query = new Query(KIND_USER)
             .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
     PreparedQuery results = datastore.prepare(query);
     Entity userEntity = results.asSingleEntity();
@@ -75,7 +77,7 @@ public class Datastore {
 
   /** Stores the Message in Datastore. */
   public void storeMessage(Message message) {
-    Entity messageEntity = new Entity("Message", message.getId().toString());
+    Entity messageEntity = new Entity(KIND_MESSAGE, message.getId().toString());
 
     messageEntity.setProperty("user", message.getUser().getEmail());
     // styled text part 1 here. Temporary remove it
@@ -91,14 +93,14 @@ public class Datastore {
 
   /** Returns the total number of messages for all users. */
   public int getTotalMessageCount(){
-    Query query = new Query("Message");
+    Query query = new Query(KIND_MESSAGE);
     PreparedQuery results = datastore.prepare(query);
     return results.countEntities(FetchOptions.Builder.withDefaults());
   }
 
   /** Returns the total number of users. */
   public int getTotalUserCount(){
-    Query query = new Query("User");
+    Query query = new Query(KIND_USER);
     PreparedQuery results = datastore.prepare(query);
     return results.countEntities(FetchOptions.Builder.withDefaults());
   }
@@ -115,10 +117,10 @@ public class Datastore {
    * @return a message of that id, or null if no message with that id was found.
    */
   public Message getMessage(String id) {
-    Key messageKey = KeyFactory.createKey("Message", id);
+    Key messageKey = KeyFactory.createKey(KIND_MESSAGE, id);
 
     Query query =
-            new Query("Message")
+            new Query(KIND_MESSAGE)
                     .setFilter(new Query.FilterPredicate("__key__", FilterOperator.EQUAL, messageKey));
 
     List<Message> messages = getMessagesFromQuery(query);
@@ -129,10 +131,10 @@ public class Datastore {
    * Deletes message with a specific id, or do nothing if message not found.
    */
   public void deleteMessage(String id) {
-    Key messageKey = KeyFactory.createKey("Message", id);
+    Key messageKey = KeyFactory.createKey(KIND_MESSAGE, id);
 
     Query query =
-            new Query("Message")
+            new Query(KIND_MESSAGE)
                     .setKeysOnly()
                     .setFilter(new Query.FilterPredicate("__key__", FilterOperator.EQUAL, messageKey));
 
@@ -152,7 +154,7 @@ public class Datastore {
    */
   public List<Message> getMessages(String user) {
     Query query =
-        new Query("Message")
+        new Query(KIND_MESSAGE)
             .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
             .addSort("timestamp", SortDirection.DESCENDING);
 
@@ -167,7 +169,7 @@ public class Datastore {
    */
   public List<Message> getAllMessages() {
     Query query =
-        new Query("Message")
+        new Query(KIND_MESSAGE)
             .addSort("timestamp", SortDirection.DESCENDING);
 
     return getMessagesFromQuery(query);
@@ -206,7 +208,7 @@ public class Datastore {
 
   public Set<String> getUsers(){
     Set<String> users = new HashSet<>();
-    Query query = new Query("Message");
+    Query query = new Query(KIND_MESSAGE);
     PreparedQuery results = datastore.prepare(query);
     for(Entity entity : results.asIterable()) {
       users.add((String) entity.getProperty("user"));
