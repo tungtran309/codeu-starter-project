@@ -41,6 +41,7 @@ limitations under the License.
     <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/user-page.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/ckeditor5/12.2.0/classic/ckeditor.js"></script>
 </head>
 <body>
@@ -134,6 +135,17 @@ limitations under the License.
                     String dateString = date.getDate() + "/" + (date.getMonth()+1) + "/" + (date.getYear() + 1900) + "\n" + date.getHours() + ":" + date.getMinutes();
                         %>
                         <div class="row border-grey">
+                            <div class="col-vote">
+                                <label class="switch">
+                                    <input type="checkbox" id="upvote" onclick="checkUpvote()">
+                                    <div class="fa fa-icon fa-caret-up fa-2x pull-left"></div>
+                                </label>
+                                <div style="padding-left: 3px; font-size: 140%"> <%= message.getVote() %> </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="downvote" onclick="checkDownvote()">
+                                    <div class="fa fa-icon fa-caret-down fa-2x pull-left"></div>
+                                </label>
+                            </div>
                             <div class="col-2" style="border-right: solid thin darkgray">
                                 <div class="card border" style="padding: 5px; margin: 10px;">
 
@@ -158,7 +170,7 @@ limitations under the License.
 
                                 </div>
                             </div>
-                            <div id="meme-content" class="col-10"><%=message.getText()%>
+                            <div id="meme-content" class="col-auto"><%=message.getText()%>
                             </div>
                         </div>
                         <%

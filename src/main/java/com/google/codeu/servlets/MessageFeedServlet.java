@@ -50,7 +50,7 @@ public class MessageFeedServlet extends HttpServlet {
         List<Message> messages = datastore.getAllMessages();
         List<Message> messagesWithImage = new ArrayList<>();
         messages.forEach(message -> {
-            Message replacedMessage = new Message(message.getUser(), UserServlet.ImageReplacement(message.getText()));
+            Message replacedMessage = new Message(message.getUser(), UserServlet.ImageReplacement(message.getText()), message.getVote());
             messagesWithImage.add(replacedMessage);
         });
 

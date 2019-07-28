@@ -20,8 +20,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/feed.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/navigation-loader.js"></script>
 </head>
@@ -77,7 +76,7 @@
                         <input type="checkbox" id="upvote" onclick="checkUpvote()">
                         <div class="fa fa-icon fa-caret-up fa-2x pull-left"></div>
                     </label>
-                    <br>
+                    <div style="padding-left: 3px; font-size: 140%"> <%= message.getVote() %> </div>
                     <label class="switch">
                         <input type="checkbox" id="downvote" onclick="checkDownvote()">
                         <div class="fa fa-icon fa-caret-down fa-2x pull-left"></div>
