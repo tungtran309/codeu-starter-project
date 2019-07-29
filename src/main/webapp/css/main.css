@@ -41,6 +41,7 @@
 
 .col-2{
     padding-left: 0;
+    border-right: solid thin darkgray;
 }
 
 .jumbotron{
@@ -55,8 +56,18 @@
     height: 0;
 }
 
+.vote-content{
+    padding-left: 3px;
+    font-size: 140%;
+}
+
 #contentInTheMiddle{
     text-align: center;
+}
+
+#card-border{
+    padding: 5px;
+    margin: 10px;
 }
 
 #map{

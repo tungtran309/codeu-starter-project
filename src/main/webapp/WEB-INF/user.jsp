@@ -132,7 +132,7 @@ limitations under the License.
             } else {
                 for (Message message : messages) {
                     Date date = new Date(message.getTimestamp());
-                    String dateString = date.getDate() + "/" + (date.getMonth()+1) + "/" + (date.getYear() + 1900) + "\n" + date.getHours() + ":" + date.getMinutes();
+                    String dateString = (date.getMonth()+1) + "/" + date.getDate() + "/" + (date.getYear() + 1900) + "\n" + date.getHours() + ":" + date.getMinutes();
                         %>
                         <div class="row border-grey">
                             <div class="col-vote">
@@ -140,14 +140,14 @@ limitations under the License.
                                     <input type="checkbox" id="upvote" onclick="checkUpvote()">
                                     <div class="fa fa-icon fa-caret-up fa-2x pull-left"></div>
                                 </label>
-                                <div style="padding-left: 3px; font-size: 140%"> <%= message.getVote() %> </div>
+                                <div class="vote-content"> <%= message.getVote() %> </div>
                                 <label class="switch">
                                     <input type="checkbox" id="downvote" onclick="checkDownvote()">
                                     <div class="fa fa-icon fa-caret-down fa-2x pull-left"></div>
                                 </label>
                             </div>
-                            <div class="col-2" style="border-right: solid thin darkgray">
-                                <div class="card border" style="padding: 5px; margin: 10px;">
+                            <div class="col-2">
+                                <div class="card border" id="card-border">
 
                                     <img class="card-img-top" src="<%=
                                         message.getUser().getAvatarUrl()
@@ -164,7 +164,7 @@ limitations under the License.
 
                                         <hr/>
 
-                                        <p style="text-align: center"><font size="1"> <%= dateString %> </font> </p>
+                                        <p id="contentInTheMiddle"><font size="1"> <%= dateString %> </font> </p>
 
                                     </div>
 
