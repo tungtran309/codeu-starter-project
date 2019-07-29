@@ -20,7 +20,6 @@ import java.util.UUID;
 
 /** A single message posted by a user. */
 public class Message {
-
   private UUID id;
   private User user;
   private String text;
