@@ -72,10 +72,12 @@
         %>
             <div class="row border-grey">
                 <div class="col-vote">
-                    <label class="switch">
-                        <input type="checkbox" id="upvote" onclick="checkUpvote()">
-                        <div class="fa fa-icon fa-caret-up fa-2x pull-left"></div>
-                    </label>
+                    <form action="/upvote" method="POST">
+                        <label class="switch">
+                            <input type="checkbox" id="upvote" onclick="checkUpvote()">
+                            <div class="fa fa-icon fa-caret-up fa-2x pull-left"></div>
+                        </label>
+                    </form>
                     <div class="vote-content"> <%= message.getVote() %> </div>
                     <label class="switch">
                         <input type="checkbox" id="downvote" onclick="checkDownvote()">
