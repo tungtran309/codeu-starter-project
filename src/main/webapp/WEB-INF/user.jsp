@@ -27,8 +27,6 @@ limitations under the License.
 
     String urlUserEmail = (String)request.getAttribute("urlUserEmail");
     String loggedInUserEmail = (String)request.getAttribute("loggedInUserEmail");
-    FluentLogger logger = FluentLogger.forEnclosingClass();
-    logger.atInfo().log("urlUserEmail: %s; loggedInUserEmail: %s", urlUserEmail, loggedInUserEmail);
 
     String visibilityTag = urlUserEmail.equals(loggedInUserEmail) ? "" : "hidden"; %>
 

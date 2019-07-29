@@ -3,6 +3,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
+<%@ page import="com.google.common.flogger.FluentLogger" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -10,7 +11,6 @@
 
     List<Message> messages = (List<Message>) request.getAttribute("messages");
     String loggedInUserEmail = (String)request.getAttribute("loggedInUserEmail");
-
 %>
 <!DOCTYPE html>
 <html>
@@ -81,7 +81,6 @@
                              alt="Avatar">
 
                         <div class="card-body">
-
                             <h4 id="page-title" class="text-center">
                                 <a href=<%="/users/" + message.getUser().getEmail()%>>
                                     <%=message.getUser().getDisplayedName().equals("")?
@@ -93,6 +92,14 @@
 
                             <p style="text-align: center"> <%= dateString %> </p>
 
+                            <% if (message.getUser().getEmail().equals(loggedInUserEmail)) { %>
+                            <div>
+                                <form method="POST" action="/delete-message">
+                                    <input type="hidden" name="id" value="<%=message.getId().toString()%>" />
+                                    <input type="submit" value="Delete" class="btn btn-primary"/>
+                                </form>
+                            </div>
+                            <% } %>
                         </div>
 
                     </div>
