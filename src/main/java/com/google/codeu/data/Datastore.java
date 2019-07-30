@@ -147,6 +147,22 @@ public class Datastore {
     }
   }
 
+  public void adjustVote(Message message, long vote) {
+    Entity messageEntity = new Entity(KIND_MESSAGE, message.getId().toString());
+
+    messageEntity.setProperty("user", message.getUser().getEmail());
+    // styled text part 1 here. Temporary remove it
+    /*Parser parser = Parser.builder().build();
+    Node document = parser.parse(message.getText());
+    HtmlRenderer renderer = HtmlRenderer.builder().build();
+    messageEntity.setProperty("text", renderer.render(document));*/
+    messageEntity.setProperty("text", message.getText());
+    messageEntity.setProperty("timestamp", message.getTimestamp());
+    messageEntity.setProperty("vote", message.getVote() + vote);
+
+    datastore.put(messageEntity);
+  }
+
   /**
    * Gets messages posted by a specific user.
    *

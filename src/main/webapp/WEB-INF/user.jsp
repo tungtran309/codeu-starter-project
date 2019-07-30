@@ -39,7 +39,6 @@ limitations under the License.
     <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/user-page.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/ckeditor5/12.2.0/classic/ckeditor.js"></script>
 </head>
 <body>
@@ -125,56 +124,45 @@ limitations under the License.
 
             <div id="message-container">
                 <%
-            if (messages.size() == 0) {
+                    if (messages.size() == 0) {
                 %>This user has no posts yet<%
             } else {
                 for (Message message : messages) {
                     Date date = new Date(message.getTimestamp());
                     String dateString = (date.getMonth()+1) + "/" + date.getDate() + "/" + (date.getYear() + 1900) + "\n" + date.getHours() + ":" + date.getMinutes();
-                        %>
-                        <div class="row border-grey">
-                            <div class="col-vote">
-                                <label class="switch">
-                                    <input type="checkbox" id="upvote" onclick="checkUpvote()">
-                                    <div class="fa fa-icon fa-caret-up fa-2x pull-left"></div>
-                                </label>
-                                <div class="vote-content"> <%= message.getVote() %> </div>
-                                <label class="switch">
-                                    <input type="checkbox" id="downvote" onclick="checkDownvote()">
-                                    <div class="fa fa-icon fa-caret-down fa-2x pull-left"></div>
-                                </label>
-                            </div>
-                            <div class="col-2">
-                                <div class="card border" id="card-border">
+            %>
+                <div class="row border-grey">
+                    <div class="col-2">
+                        <div class="card border" id="col-2-border">
 
-                                    <img class="card-img-top" src="<%=
+                            <img class="card-img-top" src="<%=
                                         message.getUser().getAvatarUrl()
                                     %>"
-                                         width="90%"
-                                         alt="Avatar">
+                                 width="90%"
+                                 alt="Avatar">
 
-                                    <div class="card-body">
+                            <div class="card-body">
 
-                                        <h6 id="page-title" class="text-center">
-                                            <%=message.getUser().getDisplayedName().equals("")?
-                                                    message.getUser().getEmail() : message.getUser().getDisplayedName()%>
-                                        </h6>
+                                <h6 id="page-title" class="text-center">
+                                    <%=message.getUser().getDisplayedName().equals("")?
+                                            message.getUser().getEmail() : message.getUser().getDisplayedName()%>
+                                </h6>
 
-                                        <hr/>
+                                <hr/>
 
-                                        <p id="contentInTheMiddle"><font size="1"> <%= dateString %> </font> </p>
+                                <p id="contentInTheMiddle"><font size="1"> <%= dateString %> </font> </p>
 
-                                    </div>
-
-                                </div>
                             </div>
-                            <div id="meme-content" class="col-auto"><%=message.getText()%>
-                            </div>
+
                         </div>
-                        <%
+                    </div>
+                    <div id="meme-content" class="col-10"><%=message.getText()%>
+                    </div>
+                </div>
+                <%
+                        }
                     }
-            }
-            %>
+                %>
             </div>
         </div>
 

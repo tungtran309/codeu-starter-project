@@ -82,19 +82,7 @@ public class MessageServlet extends HttpServlet {
 
     // Our form only contains a single file input, so get the first index.
     BlobKey blobKey = blobKeys.get(0);
-    byte[] blobBytes = ImageAnalysisServlet.getBlobBytes(blobKey);
-    List<EntityAnnotation> imageLabels = ImageAnalysisServlet.getImageLabels(blobBytes);
-    StringBuilder prefix = new StringBuilder("\n");
-    int n_items = 3;
-    prefix.append("<ul>");
-    for(EntityAnnotation label : imageLabels){
-      prefix.append("<li>" + "#" + label.getDescription() + "\n" + "</li>");
-      n_items--;
-      if (n_items == 0) {
-        break;
-      }
-    }
-    prefix.append("</ul>");
+
 
     // User submitted form without selecting a file, so we can't get a URL. (live server)
     BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
@@ -109,6 +97,6 @@ public class MessageServlet extends HttpServlet {
     // Use ImagesService to get a URL that points to the uploaded file.
     ImagesService imagesService = ImagesServiceFactory.getImagesService();
     ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
-    return "<img src=\"" + imagesService.getServingUrl(options) + "\">" + prefix;
+    return "<img src=\"" + imagesService.getServingUrl(options) + "\">";
   }
 }
