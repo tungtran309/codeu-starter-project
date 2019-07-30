@@ -68,3 +68,12 @@
     margin: 25px;
     max-width: 100%;
 }
+
+.vote-content{
+    padding-left: 2px;
+    font-size: 110%;
+}
+
+.vote-icon{
+    font-size: 150%;
+}

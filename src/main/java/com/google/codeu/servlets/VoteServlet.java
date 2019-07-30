@@ -42,6 +42,6 @@ public class VoteServlet extends HttpServlet {
             datastore.adjustVote(message, -1);
         }
 
-        response.sendRedirect("/feed");
+        response.sendRedirect(request.getHeader("referer"));
     }
 }

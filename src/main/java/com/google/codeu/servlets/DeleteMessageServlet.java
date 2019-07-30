@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static java.lang.System.out;
+
 /** Handles deleting {@link Message} instances. */
 
 @WebServlet("/delete-message")
@@ -61,6 +63,6 @@ public class DeleteMessageServlet extends HttpServlet {
             datastore.deleteMessage(messageId);
         }
 
-        response.sendRedirect("/feed");
+        response.sendRedirect(request.getHeader("referer"));
     }
 }

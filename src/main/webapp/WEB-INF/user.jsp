@@ -39,6 +39,7 @@ limitations under the License.
     <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/user-page.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/ckeditor5/12.2.0/classic/ckeditor.js"></script>
 </head>
 <body>
@@ -132,6 +133,30 @@ limitations under the License.
                     String dateString = (date.getMonth()+1) + "/" + date.getDate() + "/" + (date.getYear() + 1900) + "\n" + date.getHours() + ":" + date.getMinutes();
             %>
                 <div class="row border-grey">
+                    <div class="col-vote">
+                        <form action="/vote" method="POST">
+                            <input type="hidden" name="id" value="<%=message.getId().toString()%>" />
+                            <input type="hidden" name="upvote" value="1">
+                            <label class="vote-button">
+                                <input id="hidden-submit-button" type="submit">
+                                <div class="vote-icon">
+                                    <i class="fa fa-icon fa-caret-up pull-left"></i>
+                                </div>
+                            </label>
+                        </form>
+                        <form> <input id="hidden-submit-button" type="submit"> </form>
+                        <div class="vote-content"> <%= message.getVote() %> </div>
+                        <form action="/vote" method="POST">
+                            <input type="hidden" name="id" value="<%=message.getId().toString()%>" />
+                            <input type="hidden" name="downvote" value="1">
+                            <label class="vote-button">
+                                <input id="hidden-submit-button" type="submit">
+                                <div class="vote-icon">
+                                    <i class="fa fa-icon fa-caret-down pull-left"></i>
+                                </div>
+                            </label>
+                        </form>
+                    </div>
                     <div class="col-2">
                         <div class="card border" id="col-2-border">
 
@@ -151,12 +176,18 @@ limitations under the License.
                                 <hr/>
 
                                 <p id="contentInTheMiddle"><font size="1"> <%= dateString %> </font> </p>
-
                             </div>
-
                         </div>
+                        <% if (message.getUser().getEmail().equals(loggedInUserEmail)) { %>
+                        <div id="col-2-border">
+                            <form method="POST" action="/delete-message">
+                                <input type="hidden" name="id" value="<%=message.getId().toString()%>" />
+                                <input type="submit" value="Delete" class="btn btn-primary"/>
+                            </form>
+                        </div>
+                        <% } %>
                     </div>
-                    <div id="meme-content" class="col-10"><%=message.getText()%>
+                    <div id="meme-content" class="col-auto"><%=message.getText()%>
                     </div>
                 </div>
                 <%
