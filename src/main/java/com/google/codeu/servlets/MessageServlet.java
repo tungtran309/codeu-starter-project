@@ -59,8 +59,9 @@ public class MessageServlet extends HttpServlet {
 
     User user = datastore.getUser(userService.getCurrentUser().getEmail());
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.basic());
+    long vote = 0;
 
-    Message message = new Message(user, text + '\n' + getUploadedFileUrlToImageSource(request, "image"));
+    Message message = new Message(user, text + '\n' + getUploadedFileUrlToImageSource(request, "image"), vote);
     datastore.storeMessage(message);
 
     response.sendRedirect("/users/" + user.getEmail());

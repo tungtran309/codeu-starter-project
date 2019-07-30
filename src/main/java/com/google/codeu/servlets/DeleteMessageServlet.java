@@ -61,6 +61,6 @@ public class DeleteMessageServlet extends HttpServlet {
             datastore.deleteMessage(messageId);
         }
 
-        response.sendRedirect("/feed");
+        response.sendRedirect(request.getHeader("referer"));
     }
 }

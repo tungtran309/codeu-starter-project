@@ -87,6 +87,7 @@ public class Datastore {
     messageEntity.setProperty("text", renderer.render(document));*/
     messageEntity.setProperty("text", message.getText());
     messageEntity.setProperty("timestamp", message.getTimestamp());
+    messageEntity.setProperty("vote", message.getVote());
 
     datastore.put(messageEntity);
   }
@@ -146,6 +147,22 @@ public class Datastore {
     }
   }
 
+  public void adjustVote(Message message, long vote) {
+    Entity messageEntity = new Entity(KIND_MESSAGE, message.getId().toString());
+
+    messageEntity.setProperty("user", message.getUser().getEmail());
+    // styled text part 1 here. Temporary remove it
+    /*Parser parser = Parser.builder().build();
+    Node document = parser.parse(message.getText());
+    HtmlRenderer renderer = HtmlRenderer.builder().build();
+    messageEntity.setProperty("text", renderer.render(document));*/
+    messageEntity.setProperty("text", message.getText());
+    messageEntity.setProperty("timestamp", message.getTimestamp());
+    messageEntity.setProperty("vote", message.getVote() + vote);
+
+    datastore.put(messageEntity);
+  }
+
   /**
    * Gets messages posted by a specific user.
    *
@@ -193,8 +210,9 @@ public class Datastore {
         User user = getUser((String) entity.getProperty("user"));
         String text = (String) entity.getProperty("text");
         long timestamp = (long) entity.getProperty("timestamp");
+        long vote = (long) entity.getProperty("vote");
 
-        Message message = new Message(id, user, text, timestamp);
+        Message message = new Message(id, user, text, timestamp, vote);
         messages.add(message);
       } catch (Exception e) {
         System.err.println("Error reading message.");

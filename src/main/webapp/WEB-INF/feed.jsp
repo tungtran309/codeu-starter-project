@@ -20,7 +20,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/feed.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/navigation-loader.js"></script>
 </head>
@@ -56,7 +56,7 @@
     </div>
 
     <div class="container-fluid">
-        <p>Here you can see other users' posts like other normal news feed.</p>
+        <p>Here you can see other users' posts like other normal news feed. You can click on a name to go to that user's profile.</p>
     </div>
 
     <div class="container-fluid">
@@ -68,11 +68,32 @@
         } else {
             for (Message message : messages) {
                 Date date = new Date(message.getTimestamp());
-                String dateString = date.getDate() + "/" + (date.getMonth()+1) + "/" + (date.getYear() + 1900) + "\n" + date.getHours() + ":" + date.getMinutes();
+                String dateString = (date.getMonth()+1) + "/" + date.getDate() + "/" + (date.getYear() + 1900) + "\n" + date.getHours() + ":" + date.getMinutes();
         %>
             <div class="row border-grey">
-                <div class="col-2" style="border-right: solid thin darkgray">
-                    <div class="card border" style="padding: 5px; margin: 10px;">
+                <div class="col-vote">
+                    <form action="/vote" method="POST">
+                        <input type="hidden" name="id" value="<%=message.getId().toString()%>" />
+                        <input type="hidden" name="upvote" value="1">
+                        <label class="vote-button">
+                            <input id="hidden-submit-button" type="submit">
+                            <div class="fa fa-icon fa-caret-up fa-2x pull-left"></div>
+                        </label>
+                    </form>
+                    <form> <input id="hidden-submit-button" type="submit"> </form>
+                    <div class="vote-content"> <%= message.getVote() %> </div>
+                    <form action="/vote" method="POST">
+                        <input type="hidden" name="id" value="<%=message.getId().toString()%>" />
+                        <input type="hidden" name="downvote" value="1">
+                        <label class="vote-button">
+                            <input id="hidden-submit-button" type="submit">
+                            <div class="fa fa-icon fa-caret-down fa-2x pull-left"></div>
+                        </label>
+                    </form>
+                </div>
+
+                <div class="col-2">
+                    <div class="card border" id="col-2-border">
 
                         <img class="card-img-top" src="<%=
                                 message.getUser().getAvatarUrl()
@@ -90,21 +111,19 @@
 
                             <hr/>
 
-                            <p style="text-align: center"> <%= dateString %> </p>
-
-                            <% if (message.getUser().getEmail().equals(loggedInUserEmail)) { %>
-                            <div>
-                                <form method="POST" action="/delete-message">
-                                    <input type="hidden" name="id" value="<%=message.getId().toString()%>" />
-                                    <input type="submit" value="Delete" class="btn btn-primary"/>
-                                </form>
-                            </div>
-                            <% } %>
+                            <p id="contentInTheMiddle"> <%= dateString %> </p>
                         </div>
-
                     </div>
+                    <% if (message.getUser().getEmail().equals(loggedInUserEmail)) { %>
+                    <div id="col-2-border">
+                        <form method="POST" action="/delete-message">
+                            <input type="hidden" name="id" value="<%=message.getId().toString()%>" />
+                            <input type="submit" value="Delete" class="btn btn-primary"/>
+                        </form>
+                    </div>
+                    <% } %>
                 </div>
-                <div id="meme-content" class="col-10"><%=message.getText()%>
+                <div id="meme-content" class="col-auto"><%=message.getText()%>
                 </div>
             </div>
             <%

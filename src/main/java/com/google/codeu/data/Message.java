@@ -24,20 +24,22 @@ public class Message {
   private User user;
   private String text;
   private long timestamp;
+  private long vote;
 
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
    */
-  public Message(User user, String text) {
-    this(UUID.randomUUID(), user, text, System.currentTimeMillis());
+  public Message(User user, String text, long vote) {
+    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), vote);
   }
 
-  public Message(UUID id, User user, String text, long timestamp) {
+  public Message(UUID id, User user, String text, long timestamp, long vote) {
     this.id = id;
     this.user = user;
     this.text = text;
     this.timestamp = timestamp;
+    this.vote = vote;
   }
 
   public UUID getId() {
@@ -55,4 +57,6 @@ public class Message {
   public long getTimestamp() {
     return timestamp;
   }
+
+  public long getVote() { return vote; }
 }

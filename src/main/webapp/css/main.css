@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+.border-grey {
+    border: thin solid darkgray;
+    border-radius: 5px;
+    margin-top: 20px;
+}
 
 .btn-primary{
     background-color: rebeccapurple;
@@ -25,14 +30,44 @@
     margin-top: 0;
 }
 
+.col-vote{
+    position: relative;
+    width: 100%;
+    padding-left: 20px;
+    -ms-flex: 0 0 4%;
+    flex: 0 0 4%;
+    max-width: 4%;
+}
+
+.col-2{
+    padding-left: 0;
+    border-right: solid thin darkgray;
+}
+
 .jumbotron{
     background-color: white;
     padding: 2rem;
     color: black;
 }
 
-#picInTheMiddle{
+.vote-content{
+    padding-left: 3px;
+    font-size: 140%;
+}
+
+#contentInTheMiddle{
     text-align: center;
+}
+
+#col-2-border{
+    padding: 5px;
+    margin: 10px;
+}
+
+#hidden-submit-button{
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
 #map{
@@ -41,8 +76,17 @@
     border: thin solid black;
 }
 
+#meme-content {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
 body{
     font-family: 'Roboto', sans-serif;
+}
+
+label{
+    display: block;
 }
 
 nav a{
