@@ -39,8 +39,12 @@ public class AboutMeServlet extends HttpServlet {
         }
 
         String userEmail = userService.getCurrentUser().getEmail();
-        String aboutMe = Jsoup.clean(request.getParameter("about-me"), Whitelist.none());
+        String aboutMe = datastore.getUser(userEmail).getAboutMe();
+        String newAboutMe = Jsoup.clean(request.getParameter("about-me"), Whitelist.none());
+        if (!(newAboutMe == null || newAboutMe.isEmpty())) aboutMe = newAboutMe;
         String displayedName = datastore.getUser(userEmail).getDisplayedName();
+        String newDisplayedName = Jsoup.clean(request.getParameter("displayed-name"), Whitelist.none());
+        if (!(newDisplayedName == null || newDisplayedName.isEmpty())) displayedName = newDisplayedName;
         String avatarUrl = datastore.getUser(userEmail).getAvatarUrl();
 
         User user = new User(userEmail, aboutMe, displayedName, avatarUrl);

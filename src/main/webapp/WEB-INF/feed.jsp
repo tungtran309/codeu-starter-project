@@ -38,7 +38,6 @@
             if (userService.isUserLoggedIn()) {
         %>
         <li class="right"><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
-        <li class="right"><a href="${pageContext.request.contextPath}/setting.html">Settings</a></li>
         <li class="right"><a href="${pageContext.request.contextPath}/users/<%=loggedInUserEmail%>">Your Page</a></li>
         <%
         } else {

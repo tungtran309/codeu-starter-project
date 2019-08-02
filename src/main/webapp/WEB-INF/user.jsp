@@ -40,6 +40,7 @@ limitations under the License.
     <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/user-page.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/js/setting-page-loader.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/12.2.0/classic/ckeditor.js"></script>
 </head>
 <body>
@@ -52,7 +53,6 @@ limitations under the License.
         <li><a href="${pageContext.request.contextPath}/feed">Message Feed</a></li>
 
         <li class="right"><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
-        <li class="right"><a href="${pageContext.request.contextPath}/setting.html">Settings</a></li>
         <li class="right"><a href="${pageContext.request.contextPath}/users/<%=loggedInUserEmail%>">Your Page</a></li>
     </ul>
 </nav>
@@ -76,11 +76,17 @@ limitations under the License.
                     <h4 id="page-title" class="text-center">
                         <%=request.getAttribute("displayedName")%>
                     </h4>
+                    <div class="form-group <%=visibilityTag%>">
+                        <form id="about-me-form" action="/about" method="POST">
+                            <textarea id="displayed-name-input" name="displayed-name" placeholder="Enter a new name that is displayed to everyone" class="form-control"></textarea>
 
-                    <hr/>
-
-                    <p> <%=request.getAttribute("about")%> </p>
-
+                            <hr>
+                            <p> <%=request.getAttribute("about")%> </p>
+                            <textarea id="about-me-input" name="about-me" placeholder="Tell something about yourself" class="form-control"></textarea>
+                            <br/>
+                            <input type="submit" value="Update" class="btn btn-primary">
+                        </form>
+                    </div>
                 </div>
 
             </div>
@@ -91,14 +97,6 @@ limitations under the License.
                     <br/>
                     <br/>
                     <input type="submit" value="Set Avatar" class="btn btn-primary" />
-                </form>
-            </div>
-
-            <div class="form-group <%=visibilityTag%>" style="margin: 15px">
-                <form id="about-me-form" action="/about" method="POST">
-                    <textarea id="about-me-input" name="about-me" placeholder="Tell something about yourself" class="form-control" rows=4 required></textarea>
-                    <br/>
-                    <input type="submit" value="Update" class="btn btn-primary">
                 </form>
             </div>
 
