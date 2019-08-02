@@ -123,12 +123,12 @@
                     <% } %>
                 </div>
                 <div id="meme-content" class="col-auto"><%=message.getText()%>
+                    <ul>
+                        <% for(String tag : message.getTags()) { %>
+                        <li> <a href=<%="/feed?tags=" + tag.replace(" ", "%20")%>>  <%= tag %> </a> </li>
+                        <% } %>
+                    </ul>
                 </div>
-                <ul>
-                    <% for(String tag : message.getTags()) { %>
-                    <li> <a href=<%="/feed?tags=" + tag.replace(" ", "%20")%>>  <%= tag %> </a> </li>
-                    <% } %>
-                </ul>
             </div>
             <%
                     }

@@ -61,10 +61,11 @@ public class MessageServlet extends HttpServlet {
     User user = datastore.getUser(userService.getCurrentUser().getEmail());
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.basic());
     long vote = 0;
-    ArrayList<String> tags = new ArrayList<>();
     BlobKey blobKey = getBlobKey(request, "image");
     Message message = new Message(user, text + '\n' + getUploadedFileUrlToImageSource(blobKey), vote);
-    message.setTags(ImageAnalysisServlet.getTags(blobKey));
+    if (blobKey != null) {
+        message.setTags(ImageAnalysisServlet.getTags(blobKey));
+    }
     datastore.storeMessage(message);
 
     response.sendRedirect("/users/" + user.getEmail());
@@ -90,6 +91,9 @@ public class MessageServlet extends HttpServlet {
   }
 
   private String getUploadedFileUrlToImageSource(BlobKey blobKey) throws IOException {
+    if (blobKey == null) {
+        return "";
+    }
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
     // User submitted form without selecting a file, so we can't get a URL. (live server)

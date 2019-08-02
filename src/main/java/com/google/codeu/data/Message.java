@@ -33,23 +33,25 @@ public class Message {
    * random ID and uses the current system time for the creation time.
    */
   public Message(User user, String text, long vote) {
-      this(UUID.randomUUID(), user, text, System.currentTimeMillis(), vote, new ArrayList<String>());
+      this(UUID.randomUUID(), user, text, System.currentTimeMillis(), vote, null);
   }
 
   String getImageLink(String text) {
-      if (text.indexOf("img") == text.length()) {
+      if (text.indexOf("<img") == -1) {
           return text;
       }
-      int pos = text.indexOf(">");
-      if (pos == -1) {
-          pos = text.length();
+      int pos = text.indexOf("<img");
+      int nxtPos = text.indexOf(">", pos + 1);
+      if (nxtPos == -1) {
+          nxtPos = text.length();
       }
-      return text.substring(0, pos);
+      return text.substring(pos, nxtPos + 1);
   }
 
   ArrayList<String> getTagsFromText(String text) {
       ArrayList<String> tags = new ArrayList<>();
-      int pos = text.indexOf("<li>");
+      int prePos = text.indexOf("<img");
+      int pos = text.indexOf("<li>", prePos + 1);
       while (pos != -1) {
           int nxtPos = text.indexOf("</li>", pos + 1);
           String tag = text.substring(pos + 4, nxtPos);
@@ -64,9 +66,18 @@ public class Message {
   public Message(UUID id, User user, String text, long timestamp, long vote, ArrayList<String> tags) {
     this.id = id;
     this.user = user;
-    this.text = getImageLink(text);
+    if (tags != null && tags.isEmpty()) {
+        this.text = getImageLink(text);
+    } else {
+        this.text = text;
+    }
+
     this.timestamp = timestamp;
     this.vote = vote;
+    if (tags == null) {
+        this.tags = new ArrayList<>();
+        return;
+    }
     if (tags.isEmpty()) {
       this.tags = getTagsFromText(text);
     } else {
