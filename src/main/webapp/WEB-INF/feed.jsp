@@ -4,6 +4,7 @@
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
 <%@ page import="com.google.common.flogger.FluentLogger" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -68,7 +69,7 @@
         } else {
             for (Message message : messages) {
                 Date date = new Date(message.getTimestamp());
-                String dateString = (date.getMonth()+1) + "/" + date.getDate() + "/" + (date.getYear() + 1900) + "\n" + date.getHours() + ":" + date.getMinutes();
+                String dateString = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(date);
         %>
             <div class="row border-grey">
                 <div class="col-vote">
