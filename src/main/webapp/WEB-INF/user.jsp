@@ -144,16 +144,15 @@ limitations under the License.
                                 </div>
                             </label>
                         </form>
-                        <form> <input id="hidden-submit-button" type="submit"> </form>
                         <div class="vote-content"> <%= message.getVote() %> </div>
                         <form action="/vote" method="POST">
                             <input type="hidden" name="id" value="<%=message.getId().toString()%>" />
                             <input type="hidden" name="downvote" value="1">
                             <label class="vote-button">
-                                <input id="hidden-submit-button" type="submit">
                                 <div class="vote-icon">
                                     <i class="fa fa-icon fa-caret-down pull-left"></i>
                                 </div>
+                                <input id="hidden-submit-button" type="submit">
                             </label>
                         </form>
                     </div>
