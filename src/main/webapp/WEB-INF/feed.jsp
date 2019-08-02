@@ -126,6 +126,11 @@
                 </div>
                 <div id="meme-content" class="col-auto"><%=message.getText()%>
                 </div>
+                <ul>
+                    <% for(String tag : message.getTags()) { %>
+                    <li> <a href=<%="/feed?tags=" + tag.replace(" ", "%20")%>>  <%= tag %> </a> </li>
+                    <% } %>
+                </ul>
             </div>
             <%
                     }

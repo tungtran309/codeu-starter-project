@@ -16,6 +16,7 @@
 
 package com.google.codeu.data;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /** A single message posted by a user. */
@@ -25,21 +26,71 @@ public class Message {
   private String text;
   private long timestamp;
   private long vote;
+  private ArrayList<String> tags;
 
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
    */
   public Message(User user, String text, long vote) {
-    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), vote);
+      this(UUID.randomUUID(), user, text, System.currentTimeMillis(), vote, new ArrayList<String>());
   }
 
-  public Message(UUID id, User user, String text, long timestamp, long vote) {
+  String getImageLink(String text) {
+      if (text.indexOf("img") == text.length()) {
+          return text;
+      }
+      int pos = text.indexOf(">");
+      if (pos == -1) {
+          pos = text.length();
+      }
+      return text.substring(0, pos);
+  }
+
+  ArrayList<String> getTagsFromText(String text) {
+      ArrayList<String> tags = new ArrayList<>();
+      int pos = text.indexOf("<li>");
+      while (pos != -1) {
+          int nxtPos = text.indexOf("</li>", pos + 1);
+          String tag = text.substring(pos + 4, nxtPos);
+          tag = tag.replace("#", "");
+          tag = tag.substring(0, tag.length() - 1);
+          pos = text.indexOf("<li>", pos + 1);
+          tags.add(tag);
+      }
+      return tags;
+  }
+
+  public Message(UUID id, User user, String text, long timestamp, long vote, ArrayList<String> tags) {
     this.id = id;
     this.user = user;
-    this.text = text;
+    this.text = getImageLink(text);
     this.timestamp = timestamp;
     this.vote = vote;
+    if (tags.isEmpty()) {
+      this.tags = getTagsFromText(text);
+    } else {
+      this.tags = tags;
+    }
+  }
+
+  public ArrayList<String> getTags() {
+      return tags;
+  }
+  public ArrayList<String> setTags(ArrayList tags) {
+      return this.tags = tags;
+  }
+
+  public boolean isContainTag(String searchTag) {
+      if (tags == null) {
+          return text.contains(searchTag);
+      }
+      for (String tag : tags) {
+          if (searchTag.equals(tag)) {
+              return true;
+          }
+      }
+      return false;
   }
 
   public UUID getId() {
