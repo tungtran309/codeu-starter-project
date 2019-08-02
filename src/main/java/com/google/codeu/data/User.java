@@ -1,7 +1,7 @@
 package com.google.codeu.data;
 
 public class User {
-
+    private static final String ANONYMOUS_AVATAR = "/images/avatar-placeholder.gif";
     private String email;
     private String aboutMe;
     private String displayedName;
@@ -25,6 +25,9 @@ public class User {
     public String getDisplayedName() {return displayedName;}
 
     public String getAvatarUrl() {
+        if (avatarUrl == null || avatarUrl.isEmpty()) {
+            return ANONYMOUS_AVATAR;
+        }
         return avatarUrl;
     }
 
