@@ -80,14 +80,13 @@
                             <div class="fa fa-icon fa-caret-up fa-2x pull-left"></div>
                         </label>
                     </form>
-                    <form> <input id="hidden-submit-button" type="submit"> </form>
                     <div class="vote-content"> <%= message.getVote() %> </div>
                     <form action="/vote" method="POST">
                         <input type="hidden" name="id" value="<%=message.getId().toString()%>" />
                         <input type="hidden" name="downvote" value="1">
                         <label class="vote-button">
-                            <input id="hidden-submit-button" type="submit">
                             <div class="fa fa-icon fa-caret-down fa-2x pull-left"></div>
+                            <input id="hidden-submit-button" type="submit">
                         </label>
                     </form>
                 </div>
