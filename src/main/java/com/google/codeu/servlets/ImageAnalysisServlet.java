@@ -52,6 +52,21 @@ public class ImageAnalysisServlet extends HttpServlet {
         return blobKey;
     }
 
+    public static ArrayList<String> getTags(BlobKey blobKey) throws IOException {
+        byte[] blobBytes = ImageAnalysisServlet.getBlobBytes(blobKey);
+        List<EntityAnnotation> imageLabels = ImageAnalysisServlet.getImageLabels(blobBytes);
+        ArrayList<String> tags = new ArrayList<>();
+        int n_items = 3;
+        for(EntityAnnotation label : imageLabels){
+            tags.add(label.getDescription());
+            n_items--;
+            if (n_items == 0) {
+                break;
+            }
+        }
+        return tags;
+    }
+
     /**
      * Blobstore stores files as binary data. This function retrieves the
      * binary data stored at the BlobKey parameter.

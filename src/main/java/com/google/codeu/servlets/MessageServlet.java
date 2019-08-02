@@ -27,6 +27,7 @@ import com.google.codeu.data.Datastore;
 import com.google.codeu.data.Message;
 import com.google.cloud.vision.v1.EntityAnnotation;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.jsoup.Jsoup;
@@ -60,8 +61,10 @@ public class MessageServlet extends HttpServlet {
     User user = datastore.getUser(userService.getCurrentUser().getEmail());
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.basic());
     long vote = 0;
-
-    Message message = new Message(user, text + '\n' + getUploadedFileUrlToImageSource(request, "image"), vote);
+    ArrayList<String> tags = new ArrayList<>();
+    BlobKey blobKey = getBlobKey(request, "image");
+    Message message = new Message(user, text + '\n' + getUploadedFileUrlToImageSource(blobKey), vote);
+    message.setTags(ImageAnalysisServlet.getTags(blobKey));
     datastore.storeMessage(message);
 
     response.sendRedirect("/users/" + user.getEmail());
@@ -70,31 +73,24 @@ public class MessageServlet extends HttpServlet {
   /**
    * Returns a URL that points to the uploaded file, or null if the user didn't upload a file.
    */
-  private String getUploadedFileUrlToImageSource(HttpServletRequest request, String formInputElementName) throws IOException {
-    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
-    List<BlobKey> blobKeys = blobs.get(formInputElementName);
 
-    // User submitted form without selecting a file, so we can't get a URL. (devserver)
-    if(blobKeys == null || blobKeys.isEmpty()) {
-      return "";
-    }
+  private BlobKey getBlobKey(HttpServletRequest request, String formInputElementName) throws IOException {
+      BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+      Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+      List<BlobKey> blobKeys = blobs.get(formInputElementName);
 
-    // Our form only contains a single file input, so get the first index.
-    BlobKey blobKey = blobKeys.get(0);
-    byte[] blobBytes = ImageAnalysisServlet.getBlobBytes(blobKey);
-    List<EntityAnnotation> imageLabels = ImageAnalysisServlet.getImageLabels(blobBytes);
-    StringBuilder prefix = new StringBuilder("\n");
-    int n_items = 3;
-    prefix.append("<ul>");
-    for(EntityAnnotation label : imageLabels){
-      prefix.append("<li>" + "#" + label.getDescription() + "\n" + "</li>");
-      n_items--;
-      if (n_items == 0) {
-        break;
+      // User submitted form without selecting a file, so we can't get a URL. (devserver)
+      if (blobKeys == null || blobKeys.isEmpty()) {
+        return null;
       }
-    }
-    prefix.append("</ul>");
+
+      // Our form only contains a single file input, so get the first index.
+      BlobKey blobKey = blobKeys.get(0);
+      return blobKey;
+  }
+
+  private String getUploadedFileUrlToImageSource(BlobKey blobKey) throws IOException {
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
     // User submitted form without selecting a file, so we can't get a URL. (live server)
     BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
@@ -109,6 +105,6 @@ public class MessageServlet extends HttpServlet {
     // Use ImagesService to get a URL that points to the uploaded file.
     ImagesService imagesService = ImagesServiceFactory.getImagesService();
     ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
-    return "<img src=\"" + imagesService.getServingUrl(options) + "\">" + prefix;
+    return "<img src=\"" + imagesService.getServingUrl(options) + "\">";
   }
 }

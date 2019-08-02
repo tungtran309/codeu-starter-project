@@ -57,7 +57,7 @@ public class UserServlet extends HttpServlet {
             List<Message> messages = datastore.getMessages(urlUserEmail);
             List<Message> messageWithImage = new ArrayList<>();
             messages.forEach(message -> {
-                Message replacedMessage = new Message(message.getId(), message.getUser(), ImageReplacement(message.getText()), message.getTimestamp(), message.getVote());
+                Message replacedMessage = new Message(message.getId(), message.getUser(), ImageReplacement(message.getText()), message.getTimestamp(), message.getVote(), message.getTags());
                 messageWithImage.add(replacedMessage);
             });
 
